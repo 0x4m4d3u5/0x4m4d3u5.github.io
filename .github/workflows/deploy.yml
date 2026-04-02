@@ -29,6 +29,7 @@ jobs:
         run: |
           git clone --depth 1 https://github.com/0x4m4d3u5/lattice.git /tmp/lattice
           cd /tmp/lattice
+          moon update
           moon build
 
       - name: Build site
