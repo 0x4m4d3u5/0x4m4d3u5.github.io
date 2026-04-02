@@ -31,12 +31,12 @@ jobs:
           cd /tmp/lattice
           moon update
           moon build --target native --release
-          chmod +x _build/native/release/build/cmd/main
+          chmod +x _build/native/release/build/cmd/main/main.exe
 
       - name: Build site
         run: |
           cd $GITHUB_WORKSPACE
-          /tmp/lattice/_build/native/release/build/cmd/main build content -o dist
+          /tmp/lattice/_build/native/release/build/cmd/main/main.exe build content -o dist
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
