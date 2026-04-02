@@ -1,0 +1,12 @@
+<header class="site-header">
+  <div class="site-header__inner">
+    <div class="site-header__brand">
+      <a href="/" class="site-header__title">{{site_name}}</a>
+    </div>
+    <nav class="site-nav" aria-label="Main navigation">
+      {{#each data.nav.links}}
+      <a href="/{{item}}/" class="site-nav__link">{{item}}</a>
+      {{/each}}
+    </nav>
+  </div>
+</header>
