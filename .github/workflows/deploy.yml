@@ -34,8 +34,8 @@ jobs:
 
       - name: Build site
         run: |
-          cd $GITHUB_WORKSPACE
-          moon run /tmp/lattice/cmd/main -- build content -o dist
+          cd /tmp/lattice
+          moon run cmd/main -- build $GITHUB_WORKSPACE/content -o $GITHUB_WORKSPACE/dist
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
