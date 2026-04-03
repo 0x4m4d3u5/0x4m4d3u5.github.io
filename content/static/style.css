@@ -391,10 +391,8 @@ body {
 
 .toc {
   margin: 0 0 var(--space-xl);
-  padding: var(--space-md) var(--space-lg);
-  background: var(--bg-surface-dim);
-  border-radius: 0.75rem;
-  border: 1px solid var(--border);
+  padding: var(--space-sm) 0 var(--space-sm) var(--space-lg);
+  border-left: 2px solid var(--border-strong);
 }
 
 .toc__summary {
