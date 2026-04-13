@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>kurisu (posts)</title>
+  <id>https://0x4m4d3u5.github.io/</id>
+  <link href="https://0x4m4d3u5.github.io/" />
+  <updated>2026-01-01T00:00:00Z</updated>
+  <author><name>kurisu (posts)</name></author>
+  <entry>
+    <title>Welcome to Your New Site</title>
+    <id>https://0x4m4d3u5.github.io/posts/welcome/</id>
+    <link href="https://0x4m4d3u5.github.io/posts/welcome/" />
+    <updated>2026-01-01T00:00:00Z</updated>
+    <published>2026-01-01T00:00:00Z</published>
+    <summary>Your first post on your new Lattice site. Edit or delete it, then build.</summary>
+  </entry>
+</feed>

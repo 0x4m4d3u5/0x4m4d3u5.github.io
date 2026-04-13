@@ -1,0 +1,8 @@
+{
+  "nodes": [
+    {"slug": "welcome", "title": "Welcome to Your New Site", "url": "/posts/welcome/"},
+    {"slug": "index", "title": "kurisu", "url": "/"}
+  ],
+  "edges": [
+  ]
+}

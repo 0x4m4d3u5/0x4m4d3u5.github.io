@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Welcome to Your New Site",
+    "slug": "welcome",
+    "url": "/posts/welcome/",
+    "tags": ["welcome"],
+    "collection": "posts",
+    "excerpt": "Congratulations — you just scaffolded a brand-new Lattice site."
+  },
+  {
+    "title": "kurisu",
+    "slug": "index",
+    "url": "/",
+    "tags": [],
+    "collection": "_root",
+    "excerpt": "a blog. mostly technical notes, observations, and whatever I'm thinking about."
+  }
+]
