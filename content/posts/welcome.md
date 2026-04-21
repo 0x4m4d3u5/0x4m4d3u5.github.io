@@ -5,6 +5,7 @@ description: Your first post on your new Lattice site. Edit or delete it, then b
 tags:
   - welcome
 author: Lattice
+draft: true
 ---
 
 # Welcome to Your New Site

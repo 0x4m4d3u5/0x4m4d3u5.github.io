@@ -6,12 +6,12 @@
   "authors": [{"name": "kurisu"}],
   "items": [
     {
-      "id": "https://0x4m4d3u5.github.io/posts/welcome/",
-      "url": "https://0x4m4d3u5.github.io/posts/welcome/",
-      "title": "Welcome to Your New Site",
-      "summary": "Your first post on your new Lattice site. Edit or delete it, then build.",
-      "date_published": "2026-01-01T00:00:00Z",
-      "date_modified": "2026-01-01T00:00:00Z"
+      "id": "https://0x4m4d3u5.github.io/posts/on-structural-content-integrity/",
+      "url": "https://0x4m4d3u5.github.io/posts/on-structural-content-integrity/",
+      "title": "on structural content integrity",
+      "summary": "Most static site generators discover content violations at the wrong time. A case for making them type errors instead.",
+      "date_published": "2026-04-20T00:00:00Z",
+      "date_modified": "2026-04-20T00:00:00Z"
     }
   ]
 }

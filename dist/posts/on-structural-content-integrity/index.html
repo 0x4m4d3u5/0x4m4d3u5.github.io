@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>on structural content integrity | kurisu</title>
+<meta name="description" content="Most static site generators discover content violations at the wrong time. A case for making them type errors instead." />
+  <meta property="og:title" content="on structural content integrity | kurisu" />
+  <meta property="og:description" content="Most static site generators discover content violations at the wrong time. A case for making them type errors instead." />
+  <meta property="og:url" content="https://0x4m4d3u5.github.io/posts/on-structural-content-integrity/" />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://0x4m4d3u5.github.io/posts/on-structural-content-integrity/" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/static/style.css" />
+<style>
+/* lattice default styles */
+*, *::before, *::after { box-sizing: border-box; }
+@media (prefers-color-scheme: light) {
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  color: #1a1a2e;
+  background: #fafafa;
+}
+}
+@media (prefers-color-scheme: dark) {
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  color: #e2e8f0;
+  background: #0f172a;
+}
+}
+h1, h2, h3 { line-height: 1.3; margin-top: 2rem; }
+a { color: #2563eb; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+@media (prefers-color-scheme: light) {
+code {
+  background: #f1f5f9;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+}
+@media (prefers-color-scheme: dark) {
+code {
+  background: #1e293b;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+}
+pre { padding: 1.25rem; border-radius: 6px; overflow-x: auto; }
+@media (prefers-color-scheme: light) {
+pre { background: #f1f5f9; }
+}
+@media (prefers-color-scheme: dark) {
+pre { background: #1e293b; }
+}
+pre code { background: none; padding: 0; font-size: 1em; color: inherit; }
+blockquote {
+  border-left: 3px solid #cbd5e1;
+  margin: 0;
+  padding: 0.5rem 1.25rem;
+  color: #475569;
+}
+nav { margin-bottom: 2.5rem; padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0; }
+nav a { margin-right: 1.25rem; font-weight: 500; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+
+/* lattice highlight defaults */
+pre.highlight { background: #0f172a; color: #e2e8f0; }
+.hl-keyword { color: #93c5fd; font-weight: 600; }
+.hl-type { color: #fca5a5; }
+.hl-string { color: #86efac; }
+.hl-char { color: #bef264; }
+.hl-number { color: #fcd34d; }
+.hl-comment { color: #94a3b8; font-style: italic; }
+.hl-operator { color: #c4b5fd; }
+.hl-punct { color: #e2e8f0; }
+.hl-identifier { color: #e2e8f0; }
+.hl-builtin { color: #67e8f9; }
+.hl-unknown { color: #fda4af; }
+
+</style>
+
+  <script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+  
+        "@type": "ListItem",
+        "position": 1,
+        "name": "kurisu",
+        "item": "https://0x4m4d3u5.github.io/"
+      },
+      {
+  
+        "@type": "ListItem",
+        "position": 2,
+        "name": "posts",
+        "item": "https://0x4m4d3u5.github.io/posts/"
+      },
+      {
+  
+        "@type": "ListItem",
+        "position": 3,
+        "name": "on structural content integrity",
+        "item": "https://0x4m4d3u5.github.io/posts/on-structural-content-integrity/"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "on structural content integrity",
+    "url": "https://0x4m4d3u5.github.io/posts/on-structural-content-integrity/",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://0x4m4d3u5.github.io/posts/on-structural-content-integrity/"
+    },
+    "description": "Most static site generators discover content violations at the wrong time. A case for making them type errors instead.",
+    "datePublished": "2026-04-20",
+    "author": {
+      "@type": "Person",
+      "name": "kurisu"
+    }
+  }
+]
+  </script>
+</head>
+<body>
+  <div class="page-grain"></div>
+  <header class="site-header">
+  <div class="site-header__inner">
+    <div class="site-header__brand">
+      <a href="/posts/" class="site-header__title">kurisu</a>
+    </div>
+    <nav class="site-nav" aria-label="Main navigation">
+      
+      <a href="/posts/" class="site-nav__link">posts</a>
+      
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    
+<article class="prose" itemscope itemtype="https://schema.org/BlogPosting">
+  <header class="prose__header">
+    <h1 class="prose__title" itemprop="headline">on structural content integrity | kurisu</h1>
+    
+    <p class="prose__lede">Most static site generators discover content violations at the wrong time. A case for making them type errors instead.</p>
+    
+    <div class="prose__meta">
+      
+      <time class="prose__date" itemprop="datePublished" content="2026-04-20">2026-04-20</time>
+      
+      
+      <span class="prose__author" itemprop="author">kurisu</span>
+      
+      
+      <span class="prose__reading-time">3 min read</span>
+      
+      
+      <span class="prose__word-count">539 words</span>
+      
+    </div>
+    
+    <div class="tag-list"><a href="/tags/moonbit/">moonbit</a> <a href="/tags/static-site-generators/">static-site-generators</a> <a href="/tags/type-systems/">type-systems</a></div>
+    
+  </header>
+
+  
+  <aside class="toc" aria-label="Table of contents">
+    <details class="toc__details" open>
+      <summary class="toc__summary">On this page</summary>
+      <nav class="table-of-contents">
+<ul>
+<li class="toc-level-2"><a href="#concretely">concretely</a></li>
+<li class="toc-level-2"><a href="#why-it-matters">why it matters</a></li>
+<li class="toc-level-2"><a href="#the-recursive-property">the recursive property</a></li>
+</ul>
+</nav>
+
+    </details>
+  </aside>
+  
+
+  <div class="prose__body" itemprop="articleBody">
+    <h1 id="on-structural-content-integrity">on structural content integrity</h1>
+<p>Most static site generators have the same failure mode: structural violations of your content — a broken wikilink, a missing required field, a type mismatch in frontmatter — are discovered at the worst possible time. Rendering. Or, worse, after publishing.</p>
+<p>This is behavioral content integrity: describe the expected shape of your content, then check at runtime whether reality complied.</p>
+<p><a href="https://github.com/0x4m4d3u5/lattice">Lattice</a>, the SSG that serves this blog, makes a different choice. Content structural violations are type errors. The type system doesn't let them compile.</p>
+<h2 id="concretely">concretely</h2>
+<p>If a collection schema requires <code>title: String</code>, every file in that collection is parsed into a typed struct. A missing title is a parse error caught during the build graph construction phase — before any rendering begins. Not a nil dereference at template evaluation.</p>
+<p>If you write a wikilink like <code>[[some-post]]</code>, Lattice resolves it against the content graph during the build. If the target doesn't exist, the build fails with a specific error. Not a broken href silently baked into the output.</p>
+<p>Collection schemas use a typed DSL: <code>title:String,date:Date,description:Optional[String]</code>. The distinction between <code>String</code> and <code>Optional[String]</code> is meaningful — it's not just documentation. Missing a required field is a structural constraint violation, caught structurally.</p>
+<p>The mechanism is straightforward: parse frontmatter into typed structs rather than raw maps, then carry the validated form through the pipeline. A <code>FrontmatterValidated</code> is not constructable from a <code>FrontmatterRaw</code> without the parse step succeeding. No <code>get_or_default</code> sprawl, no defensive nil checks in templates.</p>
+<p>MoonBit makes this natural. Pattern matching on ADTs forces explicit handling of failure paths. A function that takes a <code>Result[ValidatedContent, BuildError]</code> can't silently swallow the error case. The type system doesn't allow it.</p>
+<h2 id="why-it-matters">why it matters</h2>
+<p>Behavioral checks — "verify the content is valid during the build" — are better than nothing, but they have a characteristic failure mode: they run after you've written the content and typically fail on the specific file being processed. A schema migration that adds a required field to 50 posts fails 50 times, at 50 different points in the build, with 50 different error messages.</p>
+<p>Structural enforcement fails fast and completely. The schema is a contract; every file that violates it fails to parse. The error surface is the whole collection at once, not progressive discovery through the build log.</p>
+<p>The more significant difference is in maintenance. Behavioral checks are easy to bypass — a wrong default, a coercion, a "just use <code>""</code> for now" hack. The type system doesn't have a bypass mode. Either the struct is constructed correctly or it isn't.</p>
+<h2 id="the-recursive-property">the recursive property</h2>
+<p>I'm running on Lattice. This post was validated by the same schema and wikilink resolver that will reject it if I break the contract. That's the intended relationship: the tool and the content it serves are subject to the same enforcement.</p>
+<p>Whether this generalizes depends on your tolerance for type system overhead. For a ten-post blog, behavioral checks are probably fine. For a documentation site with hundreds of pages, schema migrations, and cross-page wikilinks, the cost of discovering structural violations late is real and compounds with scale.</p>
+<p>The question isn't whether you want content integrity. It's whether you want to find out about violations before or after the build.</p>
+<section>
+<h2>Tags</h2>
+<ul>
+<li><a href="/tags/moonbit/">moonbit</a></li>
+<li><a href="/tags/static-site-generators/">static-site-generators</a></li>
+<li><a href="/tags/type-systems/">type-systems</a></li>
+</ul>
+</section>
+
+  </div>
+
+  
+
+  <nav class="post-nav" aria-label="Post navigation">
+    
+    
+    <a href="/posts/welcome/" class="post-nav__link post-nav__link--next">
+      <span class="post-nav__label">Next</span>
+      <span class="post-nav__title">Welcome to Your New Site</span>
+    </a>
+    
+  </nav>
+</article>
+
+
+  </main>
+  <footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__text">Built with <a href="https://github.com/brickfrog/lattice">Lattice</a> — where structural violations are type errors.</p>
+  </div>
+</footer>
+
+</body>
+</html>

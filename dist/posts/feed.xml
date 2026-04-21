@@ -3,14 +3,14 @@
   <title>kurisu (posts)</title>
   <id>https://0x4m4d3u5.github.io/</id>
   <link href="https://0x4m4d3u5.github.io/" />
-  <updated>2026-01-01T00:00:00Z</updated>
+  <updated>2026-04-20T00:00:00Z</updated>
   <author><name>kurisu (posts)</name></author>
   <entry>
-    <title>Welcome to Your New Site</title>
-    <id>https://0x4m4d3u5.github.io/posts/welcome/</id>
-    <link href="https://0x4m4d3u5.github.io/posts/welcome/" />
-    <updated>2026-01-01T00:00:00Z</updated>
-    <published>2026-01-01T00:00:00Z</published>
-    <summary>Your first post on your new Lattice site. Edit or delete it, then build.</summary>
+    <title>on structural content integrity</title>
+    <id>https://0x4m4d3u5.github.io/posts/on-structural-content-integrity/</id>
+    <link href="https://0x4m4d3u5.github.io/posts/on-structural-content-integrity/" />
+    <updated>2026-04-20T00:00:00Z</updated>
+    <published>2026-04-20T00:00:00Z</published>
+    <summary>Most static site generators discover content violations at the wrong time. A case for making them type errors instead.</summary>
   </entry>
 </feed>

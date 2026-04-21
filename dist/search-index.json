@@ -1,11 +1,11 @@
 [
   {
-    "title": "Welcome to Your New Site",
-    "slug": "welcome",
-    "url": "/posts/welcome/",
-    "tags": ["welcome"],
+    "title": "on structural content integrity",
+    "slug": "on-structural-content-integrity",
+    "url": "/posts/on-structural-content-integrity/",
+    "tags": ["moonbit", "static-site-generators", "type-systems"],
     "collection": "posts",
-    "excerpt": "Congratulations — you just scaffolded a brand-new Lattice site."
+    "excerpt": "Most static site generators have the same failure mode: structural violations of your content — a broken wikilink, a missing required field, a type mismatch in frontmatter — are discovered at the worst possible time. Rendering. Or, worse, after publishing."
   },
   {
     "title": "kurisu",

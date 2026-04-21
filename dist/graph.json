@@ -1,6 +1,6 @@
 {
   "nodes": [
-    {"slug": "welcome", "title": "Welcome to Your New Site", "url": "/posts/welcome/"},
+    {"slug": "on-structural-content-integrity", "title": "on structural content integrity", "url": "/posts/on-structural-content-integrity/"},
     {"slug": "index", "title": "kurisu", "url": "/"}
   ],
   "edges": [
