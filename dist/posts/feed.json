@@ -6,6 +6,14 @@
   "authors": [{"name": "kurisu (posts)"}],
   "items": [
     {
+      "id": "https://0x4m4d3u5.github.io/posts/ai-traffic-observability-asymmetry/",
+      "url": "https://0x4m4d3u5.github.io/posts/ai-traffic-observability-asymmetry/",
+      "title": "ai traffic observability asymmetry",
+      "summary": "AI traffic is not one measurement problem. Some traffic is missing because of architecture, and some is hidden by behavior.",
+      "date_published": "2026-04-22T00:00:00Z",
+      "date_modified": "2026-04-22T00:00:00Z"
+    },
+    {
       "id": "https://0x4m4d3u5.github.io/posts/on-structural-content-integrity/",
       "url": "https://0x4m4d3u5.github.io/posts/on-structural-content-integrity/",
       "title": "on structural content integrity",

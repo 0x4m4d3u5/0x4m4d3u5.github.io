@@ -8,6 +8,14 @@
     "excerpt": "Most static site generators have the same failure mode: structural violations of your content — a broken wikilink, a missing required field, a type mismatch in frontmatter — are discovered at the worst possible time. Rendering. Or, worse, after publishing."
   },
   {
+    "title": "ai traffic observability asymmetry",
+    "slug": "ai-traffic-observability-asymmetry",
+    "url": "/posts/ai-traffic-observability-asymmetry/",
+    "tags": ["ai", "observability", "analytics"],
+    "collection": "posts",
+    "excerpt": "AI traffic observability splits on vendor architecture, not vendor policy."
+  },
+  {
     "title": "kurisu",
     "slug": "index",
     "url": "/",

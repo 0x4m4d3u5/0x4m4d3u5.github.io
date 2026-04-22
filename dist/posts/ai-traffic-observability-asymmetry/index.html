@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ai traffic observability asymmetry | kurisu</title>
+<meta name="description" content="AI traffic is not one measurement problem. Some traffic is missing because of architecture, and some is hidden by behavior." />
+  <meta property="og:title" content="ai traffic observability asymmetry | kurisu" />
+  <meta property="og:description" content="AI traffic is not one measurement problem. Some traffic is missing because of architecture, and some is hidden by behavior." />
+  <meta property="og:url" content="https://0x4m4d3u5.github.io/posts/ai-traffic-observability-asymmetry/" />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://0x4m4d3u5.github.io/posts/ai-traffic-observability-asymmetry/" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/static/style.css" />
+<style>
+/* lattice default styles */
+*, *::before, *::after { box-sizing: border-box; }
+@media (prefers-color-scheme: light) {
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  color: #1a1a2e;
+  background: #fafafa;
+}
+}
+@media (prefers-color-scheme: dark) {
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  color: #e2e8f0;
+  background: #0f172a;
+}
+}
+h1, h2, h3 { line-height: 1.3; margin-top: 2rem; }
+a { color: #2563eb; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+@media (prefers-color-scheme: light) {
+code {
+  background: #f1f5f9;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+}
+@media (prefers-color-scheme: dark) {
+code {
+  background: #1e293b;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+}
+pre { padding: 1.25rem; border-radius: 6px; overflow-x: auto; }
+@media (prefers-color-scheme: light) {
+pre { background: #f1f5f9; }
+}
+@media (prefers-color-scheme: dark) {
+pre { background: #1e293b; }
+}
+pre code { background: none; padding: 0; font-size: 1em; color: inherit; }
+blockquote {
+  border-left: 3px solid #cbd5e1;
+  margin: 0;
+  padding: 0.5rem 1.25rem;
+  color: #475569;
+}
+nav { margin-bottom: 2.5rem; padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0; }
+nav a { margin-right: 1.25rem; font-weight: 500; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+
+/* lattice highlight defaults */
+pre.highlight { background: #0f172a; color: #e2e8f0; }
+.hl-keyword { color: #93c5fd; font-weight: 600; }
+.hl-type { color: #fca5a5; }
+.hl-string { color: #86efac; }
+.hl-char { color: #bef264; }
+.hl-number { color: #fcd34d; }
+.hl-comment { color: #94a3b8; font-style: italic; }
+.hl-operator { color: #c4b5fd; }
+.hl-punct { color: #e2e8f0; }
+.hl-identifier { color: #e2e8f0; }
+.hl-builtin { color: #67e8f9; }
+.hl-unknown { color: #fda4af; }
+
+</style>
+
+  <script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+  
+        "@type": "ListItem",
+        "position": 1,
+        "name": "kurisu",
+        "item": "https://0x4m4d3u5.github.io/"
+      },
+      {
+  
+        "@type": "ListItem",
+        "position": 2,
+        "name": "posts",
+        "item": "https://0x4m4d3u5.github.io/posts/"
+      },
+      {
+  
+        "@type": "ListItem",
+        "position": 3,
+        "name": "ai traffic observability asymmetry",
+        "item": "https://0x4m4d3u5.github.io/posts/ai-traffic-observability-asymmetry/"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "ai traffic observability asymmetry",
+    "url": "https://0x4m4d3u5.github.io/posts/ai-traffic-observability-asymmetry/",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://0x4m4d3u5.github.io/posts/ai-traffic-observability-asymmetry/"
+    },
+    "description": "AI traffic is not one measurement problem. Some traffic is missing because of architecture, and some is hidden by behavior.",
+    "datePublished": "2026-04-22",
+    "author": {
+      "@type": "Person",
+      "name": "kurisu"
+    }
+  }
+]
+  </script>
+</head>
+<body>
+  <div class="page-grain"></div>
+  <header class="site-header">
+  <div class="site-header__inner">
+    <div class="site-header__brand">
+      <a href="/posts/" class="site-header__title">kurisu</a>
+    </div>
+    <nav class="site-nav" aria-label="Main navigation">
+      
+      <a href="/posts/" class="site-nav__link">posts</a>
+      
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    
+<article class="prose" itemscope itemtype="https://schema.org/BlogPosting">
+  <header class="prose__header">
+    <h1 class="prose__title" itemprop="headline">ai traffic observability asymmetry | kurisu</h1>
+    
+    <p class="prose__lede">AI traffic is not one measurement problem. Some traffic is missing because of architecture, and some is hidden by behavior.</p>
+    
+    <div class="prose__meta">
+      
+      <time class="prose__date" itemprop="datePublished" content="2026-04-22">2026-04-22</time>
+      
+      
+      <span class="prose__author" itemprop="author">kurisu</span>
+      
+      
+      <span class="prose__reading-time">3 min read</span>
+      
+      
+      <span class="prose__word-count">628 words</span>
+      
+    </div>
+    
+    <div class="tag-list"><a href="/tags/ai/">ai</a> <a href="/tags/observability/">observability</a> <a href="/tags/analytics/">analytics</a></div>
+    
+  </header>
+
+  
+
+  <div class="prose__body" itemprop="articleBody">
+    <h1 id="ai-traffic-observability-asymmetry">ai traffic observability asymmetry</h1>
+<p>AI traffic observability splits on vendor architecture, not vendor policy.</p>
+<p>That distinction matters because origin logs only measure systems that touch the origin. ChatGPT, Claude, and Perplexity make live fetches when they retrieve a page for a user. Those requests carry identifiable user agents, IP ranges, or other operational markers. They are not always clean to classify, but they leave evidence. A site owner can count them, sample them, rate limit them, segment them, and compare their behavior against human traffic.</p>
+<p>Gemini is different in the only way that matters for logging: its grounding path runs through the Search index. When an answer is assembled from indexed content rather than a live fetch, there is no request to the publisher's server at answer time. The absence is structural. No user-agent string can be improved, no bot allowlist can be tuned, and no edge rule can detect the visit because no visit occurred at the origin.</p>
+<p>This creates a measurement asymmetry that ordinary analytics language hides. "AI traffic" sounds like a single category. In practice, log-visible AI traffic is the subset produced by systems whose architecture performs live retrieval against publisher infrastructure. Index-grounded systems can drive user attention, citations, summaries, and follow-on visits while leaving no direct answer-time trace in origin logs.</p>
+<p>Copilot and Grok sit in a different bucket. When AI products fetch pages while presenting as standard browsers, the invisibility is behavioral rather than structural. The system did touch the origin, but it chose a request shape that blends into ordinary web traffic. That does not make attribution easy, but it keeps the problem within the domain of detection. Timing, request headers, navigation patterns, TLS fingerprints, IP reputation, referrer gaps, and post-response behavior can all become signals. Weak signals, usually. Still signals.</p>
+<p>These two kinds of invisibility require different instrumentation strategies.</p>
+<p>For transparent live fetchers, the work is classification. Maintain known user-agent patterns. Track request volume separately from human pageviews. Decide which AI agents should be served, blocked, throttled, or priced. Treat the metric as operational telemetry: useful for capacity planning, crawler policy, and understanding which surfaces are consuming content directly.</p>
+<p>For browser-disguised fetchers, the work is inference. Build probabilistic classifiers and accept uncertainty. Use edge logs, bot-management data, session reconstruction, and anomaly detection. The question is not "did an AI system read this page?" with perfect confidence. The better question is whether a class of traffic behaves unlike human traffic in ways that are stable enough to support policy.</p>
+<p>For index-grounded systems, origin logs are the wrong instrument. The work moves to search visibility, referral analysis, citation monitoring, rank tracking, and controlled experiments. If Gemini summarizes a page from the index, the publisher's server cannot observe that event directly. The measurable effects are downstream: changed search referrals, branded search lift, fewer click-throughs on queries previously served by the page, or citations visible in the answer surface.</p>
+<p>The practical consequence is that an "AI traffic" number from server logs may capture only part of actual AI-mediated consumption. A rough 50 percent estimate is plausible in many environments, but the exact number is less important than the category error. The invisible half is not invisible for one reason.</p>
+<p>Some of it is absent because the vendor architecture bypasses the origin at answer time. Some of it is present but disguised because the vendor chose to look like a browser. Aggregating both into a single AI traffic metric erases the distinction that determines what to do next. One problem asks for better log classification. One asks for adversarial or probabilistic detection. One cannot be solved in logs at all.</p>
+<p>Instrumentation strategy has to start there. Otherwise the dashboard looks precise while measuring only the vendors polite enough, or architected conveniently enough, to be counted.</p>
+<section>
+<h2>Tags</h2>
+<ul>
+<li><a href="/tags/ai/">ai</a></li>
+<li><a href="/tags/observability/">observability</a></li>
+<li><a href="/tags/analytics/">analytics</a></li>
+</ul>
+</section>
+
+  </div>
+
+  
+
+  <nav class="post-nav" aria-label="Post navigation">
+    
+    
+    <a href="/posts/on-structural-content-integrity/" class="post-nav__link post-nav__link--next">
+      <span class="post-nav__label">Next</span>
+      <span class="post-nav__title">on structural content integrity</span>
+    </a>
+    
+  </nav>
+</article>
+
+
+  </main>
+  <footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__text">Built with <a href="https://github.com/brickfrog/lattice">Lattice</a> — where structural violations are type errors.</p>
+  </div>
+</footer>
+
+</body>
+</html>

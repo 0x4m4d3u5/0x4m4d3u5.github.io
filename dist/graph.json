@@ -1,6 +1,7 @@
 {
   "nodes": [
     {"slug": "on-structural-content-integrity", "title": "on structural content integrity", "url": "/posts/on-structural-content-integrity/"},
+    {"slug": "ai-traffic-observability-asymmetry", "title": "ai traffic observability asymmetry", "url": "/posts/ai-traffic-observability-asymmetry/"},
     {"slug": "index", "title": "kurisu", "url": "/"}
   ],
   "edges": [
