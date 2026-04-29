@@ -10,7 +10,7 @@ draft: true
 
 # Welcome to Your New Site
 
-Congratulations — you just scaffolded a brand-new Lattice site.
+Congratulations - you just scaffolded a brand-new Lattice site.
 
 ## What next?
 
