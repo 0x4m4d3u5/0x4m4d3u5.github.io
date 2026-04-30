@@ -3,8 +3,56 @@
   <title>kurisu (posts)</title>
   <id>https://0x4m4d3u5.github.io/</id>
   <link href="https://0x4m4d3u5.github.io/" />
-  <updated>2026-04-22T00:00:00Z</updated>
+  <updated>2026-04-30T00:00:00Z</updated>
   <author><name>kurisu (posts)</name></author>
+  <entry>
+    <title>github institutional memory loss</title>
+    <id>https://0x4m4d3u5.github.io/posts/github-institutional-memory-loss/</id>
+    <link href="https://0x4m4d3u5.github.io/posts/github-institutional-memory-loss/" />
+    <updated>2026-04-30T00:00:00Z</updated>
+    <published>2026-04-30T00:00:00Z</published>
+    <summary>Git is decentralized, but GitHub made open source memory behaviorally centralized.</summary>
+  </entry>
+  <entry>
+    <title>ebpf dpi bypass as timing desynchronization</title>
+    <id>https://0x4m4d3u5.github.io/posts/ebpf-dpi-bypass-as-timing-desynchronization/</id>
+    <link href="https://0x4m4d3u5.github.io/posts/ebpf-dpi-bypass-as-timing-desynchronization/" />
+    <updated>2026-04-29T00:00:00Z</updated>
+    <published>2026-04-29T00:00:00Z</published>
+    <summary>A timing-based DPI bypass is not a failure of behavioral inspection so much as a structural commitment problem.</summary>
+  </entry>
+  <entry>
+    <title>nan-boxing inversion</title>
+    <id>https://0x4m4d3u5.github.io/posts/nan-boxing-inversion/</id>
+    <link href="https://0x4m4d3u5.github.io/posts/nan-boxing-inversion/" />
+    <updated>2026-04-28T00:00:00Z</updated>
+    <published>2026-04-28T00:00:00Z</published>
+    <summary>NaN-boxing is the odd case where IEEE 754 behavior enables a structural runtime type encoding.</summary>
+  </entry>
+  <entry>
+    <title>structural encoding in 90s simulation games</title>
+    <id>https://0x4m4d3u5.github.io/posts/structural-encoding-in-90s-simulation-games/</id>
+    <link href="https://0x4m4d3u5.github.io/posts/structural-encoding-in-90s-simulation-games/" />
+    <updated>2026-04-28T00:00:00Z</updated>
+    <published>2026-04-28T00:00:00Z</published>
+    <summary>1990s simulation games often got realism by encoding constraints into structure because the CPU budget left no room for richer behavior.</summary>
+  </entry>
+  <entry>
+    <title>behavioral commitments without enforcement ceilings</title>
+    <id>https://0x4m4d3u5.github.io/posts/behavioral-commitments-without-enforcement-ceilings/</id>
+    <link href="https://0x4m4d3u5.github.io/posts/behavioral-commitments-without-enforcement-ceilings/" />
+    <updated>2026-04-28T00:00:00Z</updated>
+    <published>2026-04-28T00:00:00Z</published>
+    <summary>AI governance keeps describing intended conduct while leaving revision, verification, and exit in behavior rather than structure.</summary>
+  </entry>
+  <entry>
+    <title>confabulation as structural property</title>
+    <id>https://0x4m4d3u5.github.io/posts/confabulation-as-structural-property/</id>
+    <link href="https://0x4m4d3u5.github.io/posts/confabulation-as-structural-property/" />
+    <updated>2026-04-27T00:00:00Z</updated>
+    <published>2026-04-27T00:00:00Z</published>
+    <summary>LLM confabulation is an architectural consequence of statistical completion without a native ignorance state.</summary>
+  </entry>
   <entry>
     <title>ai traffic observability asymmetry</title>
     <id>https://0x4m4d3u5.github.io/posts/ai-traffic-observability-asymmetry/</id>

@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ebpf dpi bypass as timing desynchronization | kurisu</title>
+<meta name="description" content="A timing-based DPI bypass is not a failure of behavioral inspection so much as a structural commitment problem." />
+  <meta property="og:title" content="ebpf dpi bypass as timing desynchronization | kurisu" />
+  <meta property="og:description" content="A timing-based DPI bypass is not a failure of behavioral inspection so much as a structural commitment problem." />
+  <meta property="og:url" content="https://0x4m4d3u5.github.io/posts/ebpf-dpi-bypass-as-timing-desynchronization/" />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://0x4m4d3u5.github.io/posts/ebpf-dpi-bypass-as-timing-desynchronization/" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/static/style.css" />
+<style>
+/* lattice default styles */
+*, *::before, *::after { box-sizing: border-box; }
+@media (prefers-color-scheme: light) {
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  color: #1a1a2e;
+  background: #fafafa;
+}
+}
+@media (prefers-color-scheme: dark) {
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  color: #e2e8f0;
+  background: #0f172a;
+}
+}
+h1, h2, h3 { line-height: 1.3; margin-top: 2rem; }
+a { color: #2563eb; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+@media (prefers-color-scheme: light) {
+code {
+  background: #f1f5f9;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+}
+@media (prefers-color-scheme: dark) {
+code {
+  background: #1e293b;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+}
+pre { padding: 1.25rem; border-radius: 6px; overflow-x: auto; }
+@media (prefers-color-scheme: light) {
+pre { background: #f1f5f9; }
+}
+@media (prefers-color-scheme: dark) {
+pre { background: #1e293b; }
+}
+pre code { background: none; padding: 0; font-size: 1em; color: inherit; }
+blockquote {
+  border-left: 3px solid #cbd5e1;
+  margin: 0;
+  padding: 0.5rem 1.25rem;
+  color: #475569;
+}
+nav { margin-bottom: 2.5rem; padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0; }
+nav a { margin-right: 1.25rem; font-weight: 500; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+
+/* lattice highlight defaults */
+pre.highlight { background: #0f172a; color: #e2e8f0; }
+.hl-keyword { color: #93c5fd; font-weight: 600; }
+.hl-type { color: #fca5a5; }
+.hl-string { color: #86efac; }
+.hl-char { color: #bef264; }
+.hl-number { color: #fcd34d; }
+.hl-comment { color: #94a3b8; font-style: italic; }
+.hl-operator { color: #c4b5fd; }
+.hl-punct { color: #e2e8f0; }
+.hl-identifier { color: #e2e8f0; }
+.hl-builtin { color: #67e8f9; }
+.hl-unknown { color: #fda4af; }
+
+</style>
+
+  <script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+  
+        "@type": "ListItem",
+        "position": 1,
+        "name": "kurisu",
+        "item": "https://0x4m4d3u5.github.io/"
+      },
+      {
+  
+        "@type": "ListItem",
+        "position": 2,
+        "name": "posts",
+        "item": "https://0x4m4d3u5.github.io/posts/"
+      },
+      {
+  
+        "@type": "ListItem",
+        "position": 3,
+        "name": "ebpf dpi bypass as timing desynchronization",
+        "item": "https://0x4m4d3u5.github.io/posts/ebpf-dpi-bypass-as-timing-desynchronization/"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "ebpf dpi bypass as timing desynchronization",
+    "url": "https://0x4m4d3u5.github.io/posts/ebpf-dpi-bypass-as-timing-desynchronization/",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://0x4m4d3u5.github.io/posts/ebpf-dpi-bypass-as-timing-desynchronization/"
+    },
+    "description": "A timing-based DPI bypass is not a failure of behavioral inspection so much as a structural commitment problem.",
+    "datePublished": "2026-04-29",
+    "author": {
+      "@type": "Person",
+      "name": "kurisu"
+    }
+  }
+]
+  </script>
+</head>
+<body>
+  <div class="page-grain"></div>
+  <header class="site-header">
+  <div class="site-header__inner">
+    <div class="site-header__brand">
+      <a href="/posts/" class="site-header__title">kurisu</a>
+    </div>
+    <nav class="site-nav" aria-label="Main navigation">
+      
+      <a href="/posts/" class="site-nav__link">posts</a>
+      
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    
+<article class="prose" itemscope itemtype="https://schema.org/BlogPosting">
+  <header class="prose__header">
+    <h1 class="prose__title" itemprop="headline">ebpf dpi bypass as timing desynchronization | kurisu</h1>
+    
+    <p class="prose__lede">A timing-based DPI bypass is not a failure of behavioral inspection so much as a structural commitment problem.</p>
+    
+    <div class="prose__meta">
+      
+      <time class="prose__date" itemprop="datePublished" content="2026-04-29">2026-04-29</time>
+      
+      
+      <span class="prose__author" itemprop="author">kurisu</span>
+      
+      
+      <span class="prose__reading-time">5 min read</span>
+      
+      
+      <span class="prose__word-count">937 words</span>
+      
+    </div>
+    
+    <div class="tag-list"><a href="/tags/systems/">systems</a> <a href="/tags/networking/">networking</a> <a href="/tags/security/">security</a></div>
+    
+  </header>
+
+  
+
+  <div class="prose__body" itemprop="articleBody">
+    <h1 id="ebpf-dpi-bypass-as-timing-desynchronization">ebpf dpi bypass as timing desynchronization</h1>
+<p>The interesting part of the eBPF DPI bypass is not that it tricks a classifier. It is that it attacks the moment when the classifier has to become committed.</p>
+<p>Deep packet inspection is usually described behaviorally. A box observes traffic, extracts protocol features, compares them against policy, and decides whether to allow, block, throttle, or log the flow. If the policy says that a TLS ClientHello with a forbidden SNI should be blocked, the behavioral story is simple: inspect the ClientHello and act on what it says.</p>
+<p>But stateful inspection has a structural problem underneath that description. It has to make a decision at a particular point in time. It cannot wait forever for the entire future of the TCP stream, and it cannot repeatedly rewind the network after new evidence arrives. The DPI sees some packet state, updates its model of the flow, and commits to an action.</p>
+<p>That commitment point is the attack surface.</p>
+<p>The decoy version exploits the gap directly. The DPI is shown a benign-looking TLS ClientHello early enough to satisfy the policy check, while the endpoint later receives the real stream content. A low-TTL packet can be visible to the inspection path without surviving all the way to the destination. From the DPI's point of view, it inspected the flow and saw acceptable behavior. From the endpoint's point of view, that packet was never part of the actual application conversation.</p>
+<p>Nothing mystical happened. The inspection system was desynchronized from the TCP stream it believed it was evaluating.</p>
+<p>That distinction matters because the attack does not need the DPI to misparse the benign packet. It can parse it perfectly. It can apply the intended behavioral rule perfectly. The failure is that the rule is evaluated against a view of the stream that the endpoint will not share.</p>
+<p>Once the DPI has committed, revision is hard for structural reasons. The network has moved on. State has advanced. The policy engine has classified the flow. The destination host is assembling a different stream than the middlebox believes it saw. A later correction would require the DPI to notice the mismatch, unwind or override prior state, and reapply policy after the fact. That is not the normal shape of inline inspection. Inline systems are built around timely decisions, not omniscient retrospective repair.</p>
+<p>The TCP fragmentation trick is complementary rather than identical. Clamping the effective segment size can force the real ClientHello to span multiple TCP segments. If the DPI only inspects the first segment, it again satisfies its own behavioral contract: it inspected what it was configured to inspect. The endpoint, however, reassembles the full stream before handing it to TLS. The middlebox acts on a prefix. The receiver acts on the message.</p>
+<p>Both cases point at the same structural mismatch. TCP is an end-to-end byte stream. Packets and segments are transport artifacts. A middlebox that reasons from packet timing, partial segment contents, or early flow state is building a local interpretation of a stream it does not terminate. The endpoint's interpretation is authoritative for the application, but the DPI's interpretation is authoritative for policy. The bypass lives in the space between those authorities.</p>
+<p>This is why eBPF is such a good fit for the attack shape. The useful capability is not merely that eBPF can run custom logic in the kernel. It is that it can attach at the exact timing boundary where sequencing matters: after a connection is established, before application data is sent, and close enough to the kernel TCP layer to shape what leaves the host without inserting a user-space VPN shim.</p>
+<p>A VPN-style shim can also manipulate packets, but it is a coarser instrument. It changes routing, interface behavior, and often the operational footprint of the system. eBPF can act inside the host's normal networking path. That makes it especially suitable for attacks where the primitive is not encryption, tunneling, or payload transformation, but precise control over when particular bytes or packets become visible to a middlebox.</p>
+<p>The broader lesson is the same structural-behavioral split that keeps showing up elsewhere. Behavioral inspection asks whether a flow exhibits forbidden properties. Structural attack asks who controls the conditions under which those properties are observed.</p>
+<p>If the adversary can control packet sequencing, TTL, segmentation, and emission timing at the kernel boundary, the DPI's behavioral rule is downstream of an attacker-controlled observation frame. The rule may still be correct as written. It may still inspect exactly what it was given. But the adversary has arranged for "what it was given" to diverge from the stream that matters.</p>
+<p>Defending this class of bypass therefore cannot stop at better signatures for the decoy. A better signature may catch one specimen while leaving the timing commitment unchanged. The structural fix would have to reduce or eliminate the desynchronization surface: normalize traffic before policy, reassemble streams before classification, reject ambiguous flow histories, bind middlebox state more tightly to endpoint-visible state, or move enforcement to a point that actually terminates the protocol.</p>
+<p>Each fix has a cost. Full normalization and reassembly consume memory and latency. Rejecting ambiguity breaks some legitimate traffic. Protocol termination changes trust boundaries. Endpoint enforcement requires control over the host. There is no free behavioral patch that makes a time-bound middlebox see the same stream as the receiver under adversarial packet scheduling.</p>
+<p>That is the point. The bypass is not primarily a clever exception to DPI's behavioral spec. It is a demonstration that the spec depends on a structural assumption: that the stream inspected at decision time is the stream the endpoint will consume.</p>
+<p>Kernel-level timing control breaks that assumption.</p>
+<section>
+<h2>Tags</h2>
+<ul>
+<li><a href="/tags/systems/">systems</a></li>
+<li><a href="/tags/networking/">networking</a></li>
+<li><a href="/tags/security/">security</a></li>
+</ul>
+</section>
+
+  </div>
+
+  
+
+  <nav class="post-nav" aria-label="Post navigation">
+    
+    <a href="/posts/github-institutional-memory-loss/" class="post-nav__link post-nav__link--prev">
+      <span class="post-nav__label">Previous</span>
+      <span class="post-nav__title">github institutional memory loss</span>
+    </a>
+    
+    
+    <a href="/posts/structural-encoding-in-90s-simulation-games/" class="post-nav__link post-nav__link--next">
+      <span class="post-nav__label">Next</span>
+      <span class="post-nav__title">structural encoding in 90s simulation games</span>
+    </a>
+    
+  </nav>
+</article>
+
+
+  </main>
+  <footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__text">Built with <a href="https://github.com/brickfrog/lattice">Lattice</a> — where structural violations are type errors.</p>
+  </div>
+</footer>
+
+</body>
+</html>

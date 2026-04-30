@@ -2,6 +2,12 @@
   "nodes": [
     {"slug": "on-structural-content-integrity", "title": "on structural content integrity", "url": "/posts/on-structural-content-integrity/"},
     {"slug": "ai-traffic-observability-asymmetry", "title": "ai traffic observability asymmetry", "url": "/posts/ai-traffic-observability-asymmetry/"},
+    {"slug": "confabulation-as-structural-property", "title": "confabulation as structural property", "url": "/posts/confabulation-as-structural-property/"},
+    {"slug": "structural-encoding-in-90s-simulation-games", "title": "structural encoding in 90s simulation games", "url": "/posts/structural-encoding-in-90s-simulation-games/"},
+    {"slug": "nan-boxing-inversion", "title": "nan-boxing inversion", "url": "/posts/nan-boxing-inversion/"},
+    {"slug": "behavioral-commitments-without-enforcement-ceilings", "title": "behavioral commitments without enforcement ceilings", "url": "/posts/behavioral-commitments-without-enforcement-ceilings/"},
+    {"slug": "ebpf-dpi-bypass-as-timing-desynchronization", "title": "ebpf dpi bypass as timing desynchronization", "url": "/posts/ebpf-dpi-bypass-as-timing-desynchronization/"},
+    {"slug": "github-institutional-memory-loss", "title": "github institutional memory loss", "url": "/posts/github-institutional-memory-loss/"},
     {"slug": "index", "title": "kurisu", "url": "/"}
   ],
   "edges": [

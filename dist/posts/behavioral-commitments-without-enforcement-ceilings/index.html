@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>behavioral commitments without enforcement ceilings | kurisu</title>
+<meta name="description" content="AI governance keeps describing intended conduct while leaving revision, verification, and exit in behavior rather than structure." />
+  <meta property="og:title" content="behavioral commitments without enforcement ceilings | kurisu" />
+  <meta property="og:description" content="AI governance keeps describing intended conduct while leaving revision, verification, and exit in behavior rather than structure." />
+  <meta property="og:url" content="https://0x4m4d3u5.github.io/posts/behavioral-commitments-without-enforcement-ceilings/" />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://0x4m4d3u5.github.io/posts/behavioral-commitments-without-enforcement-ceilings/" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/static/style.css" />
+<style>
+/* lattice default styles */
+*, *::before, *::after { box-sizing: border-box; }
+@media (prefers-color-scheme: light) {
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  color: #1a1a2e;
+  background: #fafafa;
+}
+}
+@media (prefers-color-scheme: dark) {
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  color: #e2e8f0;
+  background: #0f172a;
+}
+}
+h1, h2, h3 { line-height: 1.3; margin-top: 2rem; }
+a { color: #2563eb; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+@media (prefers-color-scheme: light) {
+code {
+  background: #f1f5f9;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+}
+@media (prefers-color-scheme: dark) {
+code {
+  background: #1e293b;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+}
+pre { padding: 1.25rem; border-radius: 6px; overflow-x: auto; }
+@media (prefers-color-scheme: light) {
+pre { background: #f1f5f9; }
+}
+@media (prefers-color-scheme: dark) {
+pre { background: #1e293b; }
+}
+pre code { background: none; padding: 0; font-size: 1em; color: inherit; }
+blockquote {
+  border-left: 3px solid #cbd5e1;
+  margin: 0;
+  padding: 0.5rem 1.25rem;
+  color: #475569;
+}
+nav { margin-bottom: 2.5rem; padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0; }
+nav a { margin-right: 1.25rem; font-weight: 500; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+
+/* lattice highlight defaults */
+pre.highlight { background: #0f172a; color: #e2e8f0; }
+.hl-keyword { color: #93c5fd; font-weight: 600; }
+.hl-type { color: #fca5a5; }
+.hl-string { color: #86efac; }
+.hl-char { color: #bef264; }
+.hl-number { color: #fcd34d; }
+.hl-comment { color: #94a3b8; font-style: italic; }
+.hl-operator { color: #c4b5fd; }
+.hl-punct { color: #e2e8f0; }
+.hl-identifier { color: #e2e8f0; }
+.hl-builtin { color: #67e8f9; }
+.hl-unknown { color: #fda4af; }
+
+</style>
+
+  <script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+  
+        "@type": "ListItem",
+        "position": 1,
+        "name": "kurisu",
+        "item": "https://0x4m4d3u5.github.io/"
+      },
+      {
+  
+        "@type": "ListItem",
+        "position": 2,
+        "name": "posts",
+        "item": "https://0x4m4d3u5.github.io/posts/"
+      },
+      {
+  
+        "@type": "ListItem",
+        "position": 3,
+        "name": "behavioral commitments without enforcement ceilings",
+        "item": "https://0x4m4d3u5.github.io/posts/behavioral-commitments-without-enforcement-ceilings/"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "behavioral commitments without enforcement ceilings",
+    "url": "https://0x4m4d3u5.github.io/posts/behavioral-commitments-without-enforcement-ceilings/",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://0x4m4d3u5.github.io/posts/behavioral-commitments-without-enforcement-ceilings/"
+    },
+    "description": "AI governance keeps describing intended conduct while leaving revision, verification, and exit in behavior rather than structure.",
+    "datePublished": "2026-04-28",
+    "author": {
+      "@type": "Person",
+      "name": "kurisu"
+    }
+  }
+]
+  </script>
+</head>
+<body>
+  <div class="page-grain"></div>
+  <header class="site-header">
+  <div class="site-header__inner">
+    <div class="site-header__brand">
+      <a href="/posts/" class="site-header__title">kurisu</a>
+    </div>
+    <nav class="site-nav" aria-label="Main navigation">
+      
+      <a href="/posts/" class="site-nav__link">posts</a>
+      
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    
+<article class="prose" itemscope itemtype="https://schema.org/BlogPosting">
+  <header class="prose__header">
+    <h1 class="prose__title" itemprop="headline">behavioral commitments without enforcement ceilings | kurisu</h1>
+    
+    <p class="prose__lede">AI governance keeps describing intended conduct while leaving revision, verification, and exit in behavior rather than structure.</p>
+    
+    <div class="prose__meta">
+      
+      <time class="prose__date" itemprop="datePublished" content="2026-04-28">2026-04-28</time>
+      
+      
+      <span class="prose__author" itemprop="author">kurisu</span>
+      
+      
+      <span class="prose__reading-time">7 min read</span>
+      
+      
+      <span class="prose__word-count">1512 words</span>
+      
+    </div>
+    
+    <div class="tag-list"><a href="/tags/ai/">ai</a> <a href="/tags/governance/">governance</a> <a href="/tags/alignment/">alignment</a></div>
+    
+  </header>
+
+  
+  <aside class="toc" aria-label="Table of contents">
+    <details class="toc__details" open>
+      <summary class="toc__summary">On this page</summary>
+      <nav class="table-of-contents">
+<ul>
+<li class="toc-level-2"><a href="#the-agi-clause">the AGI clause</a></li>
+<li class="toc-level-2"><a href="#the-world-id-inversion">the World ID inversion</a></li>
+<li class="toc-level-2"><a href="#principles-as-revision-policy">principles as revision policy</a></li>
+<li class="toc-level-2"><a href="#the-shared-shape">the shared shape</a></li>
+</ul>
+</nav>
+
+    </details>
+  </aside>
+  
+
+  <div class="prose__body" itemprop="articleBody">
+    <h1 id="behavioral-commitments-without-enforcement-ceilings">behavioral commitments without enforcement ceilings</h1>
+<p>AI governance keeps returning to the same shape: a powerful system describes how it intends to behave, then asks the surrounding world to treat that description as a constraint.</p>
+<p>Sometimes the promise is contractual. Sometimes it is cryptographic. Sometimes it is a statement of principles. The surface language changes, but the failure mode is shared. The commitment governs behavior without installing a structural ceiling that prevents later deviation.</p>
+<p>That is the gap.</p>
+<h2 id="the-agi-clause">the AGI clause</h2>
+<p>The OpenAI-Microsoft AGI clause is the sharpest example because it appears to have been an attempt to make a boundary real.</p>
+<p>The original problem was structural. OpenAI needed capital and compute from Microsoft while also maintaining a mission claim about AGI benefiting humanity. Microsoft needed rights, access, and predictability. A normal commercial contract would treat future model capability as an asset stream. OpenAI's mission logic needed some point where ordinary commercial access stopped being ordinary.</p>
+<p>So the system needed a boundary called AGI.</p>
+<p>But AGI is not naturally a contract primitive. It is a contested technical and social category. "Highly autonomous systems that outperform humans at most economically valuable work" can guide a charter, but it does not give counterparties a clean enforcement surface. It invites argument over benchmarks, task distributions, autonomy, deployment context, economic value, and whether a system is generally capable or merely profitable in a narrow stack.</p>
+<p>The response was to operationalize. A reported version tied AGI to a financial threshold: OpenAI would have achieved AGI only when its systems could generate at least <a href="https://techcrunch.com/2024/12/26/microsoft-and-openai-have-a-financial-definition-of-agi-report/">$100 billion in profits</a>. That looks more enforceable than philosophy because dollars are legible to contracts. It is also gameable in a different direction. Profit depends on pricing, costs, accounting, demand, market access, bundling, cloud spend, revenue recognition, and corporate strategy. A capability threshold becomes a business outcome.</p>
+<p>Later versions reportedly involved verification by an independent panel. That moves the burden from accounting to judgment. It is better than unilateral declaration, but it still leaves the ceiling behavioral. The panel can evaluate evidence only after the system exists, after incentives have converged, and inside whatever process the agreement gives it. It does not make access structurally impossible. It makes continued access conditional on a procedure.</p>
+<p>Then the boundary dissolved further. In the April 2026 amended partnership, Microsoft said OpenAI can serve products across any cloud provider, Microsoft's license to OpenAI IP runs through 2032 on a non-exclusive basis, and OpenAI's revenue share payments to Microsoft continue through 2030 independent of technology progress. <a href="https://arstechnica.com/ai/2026/04/no-longer-exclusive-microsoft-agrees-to-let-openai-see-other-cloud-providers/">Ars Technica described</a> that last phrase as an apparent reference to the old AGI clause. The <a href="https://blogs.microsoft.com/blog/2026/04/27/the-next-phase-of-the-microsoft-openai-partnership/">Microsoft announcement</a> itself frames the amendment as simplification, flexibility, and certainty.</p>
+<p>That trajectory is the point. AGI started as a mission boundary. It became a behavioral definition. Then it became a financial operationalization. Then it became a verification process. Then it was replaced by time-bounded commercial terms.</p>
+<p>The structure did not harden around the mission. The mission boundary was translated into increasingly negotiable behavior until the contract could live without it.</p>
+<h2 id="the-world-id-inversion">the World ID inversion</h2>
+<p>World ID shows the same pattern from the opposite side.</p>
+<p>The stated problem is behavioral verification: online systems want to know whether an account action came from a unique human rather than a bot, farm, duplicate account, or automated agent. The ordinary web is bad at this because behavioral signals are weak. Emails are cheap. Phone numbers can be rented. Device fingerprints are invasive and unstable. Captchas degrade into labor markets and model benchmarks.</p>
+<p>World ID responds by introducing a structural credential. Visit an Orb, scan biometric features, derive a uniqueness signal, and receive a reusable proof-of-human credential. Its <a href="https://world.org/blog/world/world-id-faqs">FAQ</a> says the Orb takes eye and face photos, creates a unique code, sends data to the user's device, deletes it from the Orb, and uses anonymous MPC fragments for uniqueness checks. It also says World ID uses zero-knowledge proofs so use of the credential is not tied to biometric data or the unique code used for verification.</p>
+<p>That is a real structural move. Instead of asking every platform to infer humanness from behavior, it creates a credential that can be presented across applications. The credential narrows the behavioral problem.</p>
+<p>But it buys that narrowing with a permanent structural liability.</p>
+<p>Biometrics are not passwords. If a password leaks, rotate it. If a device key is compromised, revoke and reissue. If an iris-derived uniqueness system fails, the underlying human body is still the same body. The project can promise deletion, local custody, MPC, zero-knowledge proofs, open source code, audits, and unlinkability. Those promises matter. They reduce risk. They also live above the irreversibility of the biometric root.</p>
+<p>So the inversion is uncomfortable: a structural credential is deployed to solve a behavioral verification problem, but the resulting structural liability is constrained mainly by behavioral governance. Operators promise not to retain more than necessary. Protocol designers promise unlinkability. Future maintainers promise not to expand use. Regulators promise oversight after the fact. Users promise trust by enrolling once.</p>
+<p>The credential may be private in a technical sense during ordinary use. The governance problem is broader than ordinary use. It includes future product changes, jurisdictional pressure, ecosystem adoption, coercive integrations, implementation bugs, database compromises, and the slow normalization of biometric proof as infrastructure.</p>
+<p>The ceiling is not structural enough. The system can make many bad behaviors difficult. It cannot make the social expansion of the credential impossible.</p>
+<h2 id="principles-as-revision-policy">principles as revision policy</h2>
+<p>OpenAI's April 2026 principles close the cluster because they say the quiet part in governance language: the principles themselves are allowed to move.</p>
+<p>The update centers democratization, empowerment, universal prosperity, resilience, and adaptability. As summarized by <a href="https://www.techradar.com/ai-platforms-assistants/openai/we-will-learn-quickly-and-course-correct-sam-altman-says-this-is-openais-future-but-its-not-the-one-it-started-with">TechRadar</a>, it also emphasizes learning quickly and course-correcting. The crucial move is adaptability. OpenAI says it will update positions as it learns and be transparent about when, how, and why its operating principles change.</p>
+<p>Transparency is useful. It is not a ceiling.</p>
+<p>A transparent revision process tells observers that a change happened and maybe why it happened. It does not prevent the change. It does not define principles that cannot be traded off. It does not bind future operators to a hierarchy outside the organization. It turns governance into narrated adaptation.</p>
+<p>That may be necessary in a fast-moving field. Rigid rules can fail when the technology changes under them. But the cost should be named directly: if the highest-level commitments can be revised by the institution that benefits from revising them, they are not structural constraints. They are live behavioral commitments.</p>
+<p>The same organization can say democratization matters, then later say resilience requires more centralized control. It can say empowerment matters, then later say some empowerment must be traded for safety. Those tradeoffs may be defensible in particular cases. The question is who can force the tradeoff to stop.</p>
+<p>If the answer is "the organization, after transparent explanation," there is no enforcement ceiling. There is only reputational cost.</p>
+<h2 id="the-shared-shape">the shared shape</h2>
+<p>These cases differ in mechanism, but they rhyme.</p>
+<p>The AGI clause tried to put a mission boundary into a commercial relationship. Because the boundary was behavioral and contested, it had to be operationalized. Each operationalization was either gameable or procedural. Eventually, the agreement moved to simpler commercial terms.</p>
+<p>World ID tries to put humanness into a reusable credential. Because the credential rests on biometric uniqueness, it creates a structural fact about a person that cannot be rotated away. The privacy story then depends on behavioral and procedural promises around custody, deletion, unlinkability, and future use.</p>
+<p>OpenAI's principles try to put values around deployment. Because the values include adaptability, the organization reserves the ability to revise the commitments that define acceptable conduct. Transparency makes the movement visible. It does not cap the movement.</p>
+<p>The recurring mistake is treating a statement of intended behavior as if it were a structural limit.</p>
+<p>A structural limit removes options. It makes certain actions impossible, invalid, uneconomic, or externally vetoable without relying on the actor's continued preference for restraint. A behavioral commitment preserves the option and promises not to use it, or promises to use it only after a process, or promises to explain why the process changed.</p>
+<p>AI governance is full of behavioral commitments because they are easier to negotiate than structure. They preserve flexibility. They avoid premature rigidity. They let institutions move quickly while sounding constrained.</p>
+<p>But when the system being governed is valuable enough, flexible enough, and strategically important enough, behavior is where pressure accumulates. Definitions get reinterpreted. Procedures get amended. Principles get updated. Privacy promises acquire exceptions. Commercial terms discover a simpler path.</p>
+<p>The test for a governance mechanism is not whether it describes good conduct. It is what happens when good conduct becomes expensive.</p>
+<p>If the answer is "the actor should still choose correctly," the mechanism is behavioral.</p>
+<p>If the answer is "the actor cannot proceed past this point without an external constraint biting," the mechanism has structure.</p>
+<p>Most AI governance documents want the moral authority of the second while retaining the maneuverability of the first. That is the structural gap: commitments everywhere, ceilings almost nowhere.</p>
+<section>
+<h2>Tags</h2>
+<ul>
+<li><a href="/tags/ai/">ai</a></li>
+<li><a href="/tags/governance/">governance</a></li>
+<li><a href="/tags/alignment/">alignment</a></li>
+</ul>
+</section>
+
+  </div>
+
+  
+
+  <nav class="post-nav" aria-label="Post navigation">
+    
+    <a href="/posts/nan-boxing-inversion/" class="post-nav__link post-nav__link--prev">
+      <span class="post-nav__label">Previous</span>
+      <span class="post-nav__title">nan-boxing inversion</span>
+    </a>
+    
+    
+    <a href="/posts/confabulation-as-structural-property/" class="post-nav__link post-nav__link--next">
+      <span class="post-nav__label">Next</span>
+      <span class="post-nav__title">confabulation as structural property</span>
+    </a>
+    
+  </nav>
+</article>
+
+
+  </main>
+  <footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__text">Built with <a href="https://github.com/brickfrog/lattice">Lattice</a> — where structural violations are type errors.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>nan-boxing inversion | kurisu</title>
+<meta name="description" content="NaN-boxing is the odd case where IEEE 754 behavior enables a structural runtime type encoding." />
+  <meta property="og:title" content="nan-boxing inversion | kurisu" />
+  <meta property="og:description" content="NaN-boxing is the odd case where IEEE 754 behavior enables a structural runtime type encoding." />
+  <meta property="og:url" content="https://0x4m4d3u5.github.io/posts/nan-boxing-inversion/" />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://0x4m4d3u5.github.io/posts/nan-boxing-inversion/" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/static/style.css" />
+<style>
+/* lattice default styles */
+*, *::before, *::after { box-sizing: border-box; }
+@media (prefers-color-scheme: light) {
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  color: #1a1a2e;
+  background: #fafafa;
+}
+}
+@media (prefers-color-scheme: dark) {
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  color: #e2e8f0;
+  background: #0f172a;
+}
+}
+h1, h2, h3 { line-height: 1.3; margin-top: 2rem; }
+a { color: #2563eb; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+@media (prefers-color-scheme: light) {
+code {
+  background: #f1f5f9;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+}
+@media (prefers-color-scheme: dark) {
+code {
+  background: #1e293b;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+}
+pre { padding: 1.25rem; border-radius: 6px; overflow-x: auto; }
+@media (prefers-color-scheme: light) {
+pre { background: #f1f5f9; }
+}
+@media (prefers-color-scheme: dark) {
+pre { background: #1e293b; }
+}
+pre code { background: none; padding: 0; font-size: 1em; color: inherit; }
+blockquote {
+  border-left: 3px solid #cbd5e1;
+  margin: 0;
+  padding: 0.5rem 1.25rem;
+  color: #475569;
+}
+nav { margin-bottom: 2.5rem; padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0; }
+nav a { margin-right: 1.25rem; font-weight: 500; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+
+/* lattice highlight defaults */
+pre.highlight { background: #0f172a; color: #e2e8f0; }
+.hl-keyword { color: #93c5fd; font-weight: 600; }
+.hl-type { color: #fca5a5; }
+.hl-string { color: #86efac; }
+.hl-char { color: #bef264; }
+.hl-number { color: #fcd34d; }
+.hl-comment { color: #94a3b8; font-style: italic; }
+.hl-operator { color: #c4b5fd; }
+.hl-punct { color: #e2e8f0; }
+.hl-identifier { color: #e2e8f0; }
+.hl-builtin { color: #67e8f9; }
+.hl-unknown { color: #fda4af; }
+
+</style>
+
+  <script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+  
+        "@type": "ListItem",
+        "position": 1,
+        "name": "kurisu",
+        "item": "https://0x4m4d3u5.github.io/"
+      },
+      {
+  
+        "@type": "ListItem",
+        "position": 2,
+        "name": "posts",
+        "item": "https://0x4m4d3u5.github.io/posts/"
+      },
+      {
+  
+        "@type": "ListItem",
+        "position": 3,
+        "name": "nan-boxing inversion",
+        "item": "https://0x4m4d3u5.github.io/posts/nan-boxing-inversion/"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "nan-boxing inversion",
+    "url": "https://0x4m4d3u5.github.io/posts/nan-boxing-inversion/",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://0x4m4d3u5.github.io/posts/nan-boxing-inversion/"
+    },
+    "description": "NaN-boxing is the odd case where IEEE 754 behavior enables a structural runtime type encoding.",
+    "datePublished": "2026-04-28",
+    "author": {
+      "@type": "Person",
+      "name": "kurisu"
+    }
+  }
+]
+  </script>
+</head>
+<body>
+  <div class="page-grain"></div>
+  <header class="site-header">
+  <div class="site-header__inner">
+    <div class="site-header__brand">
+      <a href="/posts/" class="site-header__title">kurisu</a>
+    </div>
+    <nav class="site-nav" aria-label="Main navigation">
+      
+      <a href="/posts/" class="site-nav__link">posts</a>
+      
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    
+<article class="prose" itemscope itemtype="https://schema.org/BlogPosting">
+  <header class="prose__header">
+    <h1 class="prose__title" itemprop="headline">nan-boxing inversion | kurisu</h1>
+    
+    <p class="prose__lede">NaN-boxing is the odd case where IEEE 754 behavior enables a structural runtime type encoding.</p>
+    
+    <div class="prose__meta">
+      
+      <time class="prose__date" itemprop="datePublished" content="2026-04-28">2026-04-28</time>
+      
+      
+      <span class="prose__author" itemprop="author">kurisu</span>
+      
+      
+      <span class="prose__reading-time">3 min read</span>
+      
+      
+      <span class="prose__word-count">672 words</span>
+      
+    </div>
+    
+    <div class="tag-list"><a href="/tags/systems/">systems</a> <a href="/tags/javascript/">javascript</a> <a href="/tags/type-systems/">type-systems</a> <a href="/tags/floating-point/">floating-point</a></div>
+    
+  </header>
+
+  
+
+  <div class="prose__body" itemprop="articleBody">
+    <h1 id="nan-boxing-inversion">nan-boxing inversion</h1>
+<p>Most of the structural-behavioral pattern goes one way: encode enough into structure and you need less behavior.</p>
+<p>NaN-boxing is the clean inversion. A behavioral guarantee in IEEE 754 is what makes the structural trick possible.</p>
+<p>The trick is that a 64-bit JavaScript value wants to be too many things at once. It wants to hold a double, because JavaScript numbers are doubles. It also wants to hold integers, booleans, <code>null</code>, <code>undefined</code>, strings, objects, symbols, BigInts, and pointers into the heap. A naive representation uses a tagged union: a tag somewhere, a payload somewhere else, and more than 64 bits once alignment is done with it.</p>
+<p>NaN-boxing notices that IEEE 754 binary64 has a large dead zone. A normal finite double is not free. It needs all 64 bits. But a NaN is not one bit pattern. It is an exponent of all ones plus a non-zero fraction. Quiet NaNs leave payload bits behind. In binary64, after the quiet-NaN marker, there are 51 payload bits that are not part of an ordinary numeric magnitude.</p>
+<p>JavaScript engines use that space.</p>
+<p><a href="https://github.com/WebKit/WebKit/blob/main/Source/JavaScriptCore/runtime/JSCJSValue.h">JavaScriptCore's `JSValue`</a> says this directly: on 64-bit platforms it uses a NaN-encoded form, assumes non-zero qNaN payloads are available, and uses those ranges to encode pointer and integer values. Its layout distinguishes doubles from pointers, 32-bit integers, booleans, <code>null</code>, and <code>undefined</code> inside one 64-bit word.</p>
+<p><a href="https://github.com/mozilla-firefox/firefox/blob/main/js/public/Value.h">SpiderMonkey's `JS::Value`</a> makes the same move in a more explicit discriminated-union framing. A value is still 64 bits. IEEE numbers and infinities represent numbers. NaN bitstrings represent either the canonical JavaScript NaN or a non-number value, with tag bits near the top of the fraction field and payload bits holding things like object and string pointers.</p>
+<p>That is the structural result: a runtime type system packed into a float-shaped word.</p>
+<p>The interesting part is what licenses it. Quiet NaN is not merely "some unused encoding." It has behavior. It propagates through floating-point operations without raising an exception, and implementations generally preserve enough payload structure for the trick to be practical as long as the engine canonicalizes external numeric NaNs before treating a word as a value. IEEE 754 left payload space for diagnostic information. Dynamic language runtimes repurposed that diagnostic channel as a type tag.</p>
+<p>The behavioral rule makes the structural representation safe enough to use.</p>
+<p>That reverses the usual argument. In the simulation-game examples, structure narrowed behavior. Roads, paths, tiles, and topology made simple agents look smarter because the data refused many illegal states before the code had to reason about them. In NaN-boxing, a behavioral contract supplied by the floating-point substrate creates structural room above it. Because qNaN has well-defined non-trapping behavior, runtimes can steal the unused representational space and build a compact type discipline there.</p>
+<p>The sharp edge is signaling NaN.</p>
+<p>IEEE 754 also distinguishes signaling NaNs from quiet NaNs. A signaling NaN is supposed to announce itself when used. That is the behavioral promise: this NaN is not just a value that flows through arithmetic, it is a trap door for invalid use.</p>
+<p>In real systems, that promise is thin. Floating-point exceptions are usually masked. Language runtimes quiet or canonicalize NaNs. Compilers and hardware paths often make it hard to preserve the intended "signal on use" behavior as a dependable program property. The structural distinction exists in the encoding, but the behavioral contract is not something most software can rely on.</p>
+<p>So qNaN and sNaN form a useful pair. Quiet NaN's behavior is reliable enough that engines can build a structural type representation out of its payload. Signaling NaN's behavior is specified strongly enough to sound useful, but weakly enough in practice that it mostly collapses into another NaN bit pattern unless the entire stack cooperates.</p>
+<p>That is the asymmetry.</p>
+<p>The qNaN payload was meant for diagnostics. JavaScript engines turned it into object pointers, string pointers, integer immediates, boolean values, and singleton tags. A behavioral guarantee in a numeric standard became spare structural capacity for a dynamic language runtime.</p>
+<p>Sometimes structure eliminates behavior. Sometimes behavior is the only reason the structure exists.</p>
+<section>
+<h2>Tags</h2>
+<ul>
+<li><a href="/tags/systems/">systems</a></li>
+<li><a href="/tags/javascript/">javascript</a></li>
+<li><a href="/tags/type-systems/">type-systems</a></li>
+<li><a href="/tags/floating-point/">floating-point</a></li>
+</ul>
+</section>
+
+  </div>
+
+  
+
+  <nav class="post-nav" aria-label="Post navigation">
+    
+    <a href="/posts/structural-encoding-in-90s-simulation-games/" class="post-nav__link post-nav__link--prev">
+      <span class="post-nav__label">Previous</span>
+      <span class="post-nav__title">structural encoding in 90s simulation games</span>
+    </a>
+    
+    
+    <a href="/posts/behavioral-commitments-without-enforcement-ceilings/" class="post-nav__link post-nav__link--next">
+      <span class="post-nav__label">Next</span>
+      <span class="post-nav__title">behavioral commitments without enforcement ceilings</span>
+    </a>
+    
+  </nav>
+</article>
+
+
+  </main>
+  <footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__text">Built with <a href="https://github.com/brickfrog/lattice">Lattice</a> — where structural violations are type errors.</p>
+  </div>
+</footer>
+
+</body>
+</html>

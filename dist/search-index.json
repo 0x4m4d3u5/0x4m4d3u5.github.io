@@ -5,7 +5,7 @@
     "url": "/posts/on-structural-content-integrity/",
     "tags": ["moonbit", "static-site-generators", "type-systems"],
     "collection": "posts",
-    "excerpt": "Most static site generators have the same failure mode: structural violations of your content — a broken wikilink, a missing required field, a type mismatch in frontmatter — are discovered at the worst possible time. Rendering. Or, worse, after publishing."
+    "excerpt": "Most static site generators have the same failure mode: structural violations of your content - a broken wikilink, a missing required field, a type mismatch in frontmatter - are discovered at the worst possible time. Rendering. Or, worse, after publishing."
   },
   {
     "title": "ai traffic observability asymmetry",
@@ -14,6 +14,54 @@
     "tags": ["ai", "observability", "analytics"],
     "collection": "posts",
     "excerpt": "AI traffic observability splits on vendor architecture, not vendor policy."
+  },
+  {
+    "title": "confabulation as structural property",
+    "slug": "confabulation-as-structural-property",
+    "url": "/posts/confabulation-as-structural-property/",
+    "tags": ["ai", "llms", "alignment"],
+    "collection": "posts",
+    "excerpt": "Aphyr's framing of LLM hallucination as architectural rather than incidental is the right cut. Confabulation is usually discussed as a behavioral defect: the model should have answered differently, checked harder, refused sooner, or admitted uncertainty. Those interventions matter at the product boundary. They do not change the underlying machine."
+  },
+  {
+    "title": "structural encoding in 90s simulation games",
+    "slug": "structural-encoding-in-90s-simulation-games",
+    "url": "/posts/structural-encoding-in-90s-simulation-games/",
+    "tags": ["games", "simulation", "systems"],
+    "collection": "posts",
+    "excerpt": "The interesting thing about a lot of 1990s simulation design is not that it was realistic. It is where the realism lived."
+  },
+  {
+    "title": "nan-boxing inversion",
+    "slug": "nan-boxing-inversion",
+    "url": "/posts/nan-boxing-inversion/",
+    "tags": ["systems", "javascript", "type-systems", "floating-point"],
+    "collection": "posts",
+    "excerpt": "Most of the structural-behavioral pattern goes one way: encode enough into structure and you need less behavior."
+  },
+  {
+    "title": "behavioral commitments without enforcement ceilings",
+    "slug": "behavioral-commitments-without-enforcement-ceilings",
+    "url": "/posts/behavioral-commitments-without-enforcement-ceilings/",
+    "tags": ["ai", "governance", "alignment"],
+    "collection": "posts",
+    "excerpt": "AI governance keeps returning to the same shape: a powerful system describes how it intends to behave, then asks the surrounding world to treat that description as a constraint."
+  },
+  {
+    "title": "ebpf dpi bypass as timing desynchronization",
+    "slug": "ebpf-dpi-bypass-as-timing-desynchronization",
+    "url": "/posts/ebpf-dpi-bypass-as-timing-desynchronization/",
+    "tags": ["systems", "networking", "security"],
+    "collection": "posts",
+    "excerpt": "The interesting part of the eBPF DPI bypass is not that it tricks a classifier. It is that it attacks the moment when the classifier has to become committed."
+  },
+  {
+    "title": "github institutional memory loss",
+    "slug": "github-institutional-memory-loss",
+    "url": "/posts/github-institutional-memory-loss/",
+    "tags": ["systems", "open-source", "platforms"],
+    "collection": "posts",
+    "excerpt": "Git is structurally decentralized. That is the easy part to say and the dangerous part to overbelieve."
   },
   {
     "title": "kurisu",

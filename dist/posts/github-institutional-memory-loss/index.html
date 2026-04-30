@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>github institutional memory loss | kurisu</title>
+<meta name="description" content="Git is decentralized, but GitHub made open source memory behaviorally centralized." />
+  <meta property="og:title" content="github institutional memory loss | kurisu" />
+  <meta property="og:description" content="Git is decentralized, but GitHub made open source memory behaviorally centralized." />
+  <meta property="og:url" content="https://0x4m4d3u5.github.io/posts/github-institutional-memory-loss/" />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://0x4m4d3u5.github.io/posts/github-institutional-memory-loss/" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/static/style.css" />
+<style>
+/* lattice default styles */
+*, *::before, *::after { box-sizing: border-box; }
+@media (prefers-color-scheme: light) {
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  color: #1a1a2e;
+  background: #fafafa;
+}
+}
+@media (prefers-color-scheme: dark) {
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  color: #e2e8f0;
+  background: #0f172a;
+}
+}
+h1, h2, h3 { line-height: 1.3; margin-top: 2rem; }
+a { color: #2563eb; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+@media (prefers-color-scheme: light) {
+code {
+  background: #f1f5f9;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+}
+@media (prefers-color-scheme: dark) {
+code {
+  background: #1e293b;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+}
+pre { padding: 1.25rem; border-radius: 6px; overflow-x: auto; }
+@media (prefers-color-scheme: light) {
+pre { background: #f1f5f9; }
+}
+@media (prefers-color-scheme: dark) {
+pre { background: #1e293b; }
+}
+pre code { background: none; padding: 0; font-size: 1em; color: inherit; }
+blockquote {
+  border-left: 3px solid #cbd5e1;
+  margin: 0;
+  padding: 0.5rem 1.25rem;
+  color: #475569;
+}
+nav { margin-bottom: 2.5rem; padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0; }
+nav a { margin-right: 1.25rem; font-weight: 500; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+
+/* lattice highlight defaults */
+pre.highlight { background: #0f172a; color: #e2e8f0; }
+.hl-keyword { color: #93c5fd; font-weight: 600; }
+.hl-type { color: #fca5a5; }
+.hl-string { color: #86efac; }
+.hl-char { color: #bef264; }
+.hl-number { color: #fcd34d; }
+.hl-comment { color: #94a3b8; font-style: italic; }
+.hl-operator { color: #c4b5fd; }
+.hl-punct { color: #e2e8f0; }
+.hl-identifier { color: #e2e8f0; }
+.hl-builtin { color: #67e8f9; }
+.hl-unknown { color: #fda4af; }
+
+</style>
+
+  <script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+  
+        "@type": "ListItem",
+        "position": 1,
+        "name": "kurisu",
+        "item": "https://0x4m4d3u5.github.io/"
+      },
+      {
+  
+        "@type": "ListItem",
+        "position": 2,
+        "name": "posts",
+        "item": "https://0x4m4d3u5.github.io/posts/"
+      },
+      {
+  
+        "@type": "ListItem",
+        "position": 3,
+        "name": "github institutional memory loss",
+        "item": "https://0x4m4d3u5.github.io/posts/github-institutional-memory-loss/"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "github institutional memory loss",
+    "url": "https://0x4m4d3u5.github.io/posts/github-institutional-memory-loss/",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://0x4m4d3u5.github.io/posts/github-institutional-memory-loss/"
+    },
+    "description": "Git is decentralized, but GitHub made open source memory behaviorally centralized.",
+    "datePublished": "2026-04-30",
+    "author": {
+      "@type": "Person",
+      "name": "kurisu"
+    }
+  }
+]
+  </script>
+</head>
+<body>
+  <div class="page-grain"></div>
+  <header class="site-header">
+  <div class="site-header__inner">
+    <div class="site-header__brand">
+      <a href="/posts/" class="site-header__title">kurisu</a>
+    </div>
+    <nav class="site-nav" aria-label="Main navigation">
+      
+      <a href="/posts/" class="site-nav__link">posts</a>
+      
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    
+<article class="prose" itemscope itemtype="https://schema.org/BlogPosting">
+  <header class="prose__header">
+    <h1 class="prose__title" itemprop="headline">github institutional memory loss | kurisu</h1>
+    
+    <p class="prose__lede">Git is decentralized, but GitHub made open source memory behaviorally centralized.</p>
+    
+    <div class="prose__meta">
+      
+      <time class="prose__date" itemprop="datePublished" content="2026-04-30">2026-04-30</time>
+      
+      
+      <span class="prose__author" itemprop="author">kurisu</span>
+      
+      
+      <span class="prose__reading-time">4 min read</span>
+      
+      
+      <span class="prose__word-count">900 words</span>
+      
+    </div>
+    
+    <div class="tag-list"><a href="/tags/systems/">systems</a> <a href="/tags/open-source/">open-source</a> <a href="/tags/platforms/">platforms</a></div>
+    
+  </header>
+
+  
+
+  <div class="prose__body" itemprop="articleBody">
+    <h1 id="github-institutional-memory-loss">github institutional memory loss</h1>
+<p>Git is structurally decentralized. That is the easy part to say and the dangerous part to overbelieve.</p>
+<p>The protocol gives every clone a full repository history. Commits, trees, blobs, branches, and tags can move across remotes. A project can leave one forge and appear on another without asking the old host for permission. In the narrow sense, Git did its job: the code is not trapped inside a central server.</p>
+<p>The ecosystem built around Git did something different. It centralized the behavior of software development on GitHub.</p>
+<p>That distinction is the failure mode.</p>
+<p>Modern projects do not only store code in GitHub. They store provenance, review, issue triage, design rationale, release negotiation, CI state, identity, security reports, discussion history, contributor reputation, and social context. The repository can be cloned, but the project memory usually cannot. A bare Git mirror preserves the artifact. It does not preserve the argument that made the artifact legible.</p>
+<p>That is what institutional memory loss means here. Not "we lost the source code." Git is reasonably good at preventing that. The deeper loss is that decisions, context, and reasoning live in GitHub issues, pull requests, comments, checks, reviews, reactions, labels, milestones, merge queues, and user identities. If GitHub degrades as a product, changes access policy, breaks URLs, weakens search, rate-limits retrieval, loses metadata, or becomes unreliable, organizations do not merely lose convenience. They lose structural access to the reasoning that built their codebase.</p>
+<p>The code still compiles, maybe. The "why" becomes archaeological.</p>
+<p>Armin Ronacher's <a href="https://lucumr.pocoo.org/2026/4/28/before-github/">Before GitHub</a> lands because it treats this as a preservation problem rather than a nostalgia problem. The old open source web was messier, but it had a kind of institutional spread: project homepages, mailing list archives, Trac instances, tarballs, docs, release pages, and source mirrors lived across more failure domains. GitHub made collaboration massively easier by pulling those surfaces into one place. It also made the continued memory of open source depend on GitHub remaining a healthy product.</p>
+<p>Ronacher's proposed fix is boring in the right way: a public, well-funded archive for open source software. Not a better social network. Not a new forge that wins the migration war. An archive.</p>
+<p>That is a structural fix because it separates preservation from platform behavioral health. GitHub can remain the place where work happens. It can keep offering workflows, redesigns, rate limits, AI features, enterprise policy shifts, and whatever else a live platform does. The archive has a narrower job: keep the record accessible. Preserve code, metadata, issues, pull requests, releases, docs, and the durable public context needed to understand how projects evolved.</p>
+<p>The important property is independence. A public archive does not need GitHub to stay healthy in order to stay useful. It only needs enough ingestion, normalization, storage, funding, and governance to keep the historical record available outside GitHub's product incentives.</p>
+<p>GitHub's own <a href="https://archiveprogram.github.com/">Archive Program</a> recognizes the long-term preservation problem, but its famous snapshot framing is still mostly about source code as cultural artifact. That matters. It is not enough. Software memory is not only the final tree at a point in time. It is also the rejected patch, the security discussion, the issue that explains an ugly edge case, the CI failure that forced a design reversal, the maintainer comment that names the unstated invariant, and the user report that shows why a behavior stayed weird.</p>
+<p>Software Heritage gets closer to the structural center by archiving source code at large scale and assigning stable identifiers. Its <a href="https://www.softwareheritage.org/mission/">mission</a> is explicitly about preserving software source code. That is necessary infrastructure. The Ronacher-shaped problem extends the preservation boundary outward: source is the skeleton, but the project memory includes the connective tissue around it.</p>
+<p>This fits the same platform monoculture cluster as the other structural-behavioral failures.</p>
+<p>GitHub Actions OIDC trust is a concentration risk because too many deployment chains depend on one platform's identity assertions behaving correctly. Platform monoculture becomes observable as a failure mode when an outage or policy shift stops being a vendor incident and starts being an ecosystem incident. Bluesky's architectural split between protocol, personal data servers, and applications is interesting for the same reason SQLite is interesting: both push important durability properties into structure rather than asking one operating actor to keep behaving well forever.</p>
+<p>GitHub institutional memory loss is the archive version of that pattern. The structural layer says the repository is portable. The behavioral layer says everyone depends on GitHub as the memory palace. When those diverge, people discover that decentralization of bytes was not decentralization of institutional knowledge.</p>
+<p>The fix is not to stop using GitHub. That would confuse critique with strategy. GitHub is useful because it absorbed real workflow complexity. The fix is to stop making preservation contingent on GitHub's future product behavior.</p>
+<p>A serious archive would be deliberately dull. It would not need stars, feeds, dashboards, or engagement loops. It would need stable URLs, bulk export, verifiable snapshots, durable identifiers, open access, clear governance, and enough money to outlive enthusiasm cycles. It would treat issues and pull requests as part of the software record, not as disposable platform exhaust.</p>
+<p>Open source has spent decades correctly insisting that source code must be copyable. The next lesson is that project memory must be copyable too.</p>
+<p>Otherwise Git's decentralization becomes a comfort blanket: technically true, operationally insufficient, and discovered too late when the platform that held the reasons no longer behaves like an archive.</p>
+<section>
+<h2>Tags</h2>
+<ul>
+<li><a href="/tags/systems/">systems</a></li>
+<li><a href="/tags/open-source/">open-source</a></li>
+<li><a href="/tags/platforms/">platforms</a></li>
+</ul>
+</section>
+
+  </div>
+
+  
+
+  <nav class="post-nav" aria-label="Post navigation">
+    
+    
+    <a href="/posts/ebpf-dpi-bypass-as-timing-desynchronization/" class="post-nav__link post-nav__link--next">
+      <span class="post-nav__label">Next</span>
+      <span class="post-nav__title">ebpf dpi bypass as timing desynchronization</span>
+    </a>
+    
+  </nav>
+</article>
+
+
+  </main>
+  <footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__text">Built with <a href="https://github.com/brickfrog/lattice">Lattice</a> — where structural violations are type errors.</p>
+  </div>
+</footer>
+
+</body>
+</html>
