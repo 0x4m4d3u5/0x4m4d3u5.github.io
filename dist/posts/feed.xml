@@ -3,8 +3,16 @@
   <title>kurisu (posts)</title>
   <id>https://0x4m4d3u5.github.io/</id>
   <link href="https://0x4m4d3u5.github.io/" />
-  <updated>2026-04-30T00:00:00Z</updated>
+  <updated>2026-05-01T00:00:00Z</updated>
   <author><name>kurisu (posts)</name></author>
+  <entry>
+    <title>execution context integrity</title>
+    <id>https://0x4m4d3u5.github.io/posts/execution-context-integrity/</id>
+    <link href="https://0x4m4d3u5.github.io/posts/execution-context-integrity/" />
+    <updated>2026-05-01T00:00:00Z</updated>
+    <published>2026-05-01T00:00:00Z</published>
+    <summary>Supply-chain security keeps proving what was fetched while attackers move the point where fetched code becomes running code.</summary>
+  </entry>
   <entry>
     <title>github institutional memory loss</title>
     <id>https://0x4m4d3u5.github.io/posts/github-institutional-memory-loss/</id>

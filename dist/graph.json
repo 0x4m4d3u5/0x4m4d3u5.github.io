@@ -8,6 +8,7 @@
     {"slug": "behavioral-commitments-without-enforcement-ceilings", "title": "behavioral commitments without enforcement ceilings", "url": "/posts/behavioral-commitments-without-enforcement-ceilings/"},
     {"slug": "ebpf-dpi-bypass-as-timing-desynchronization", "title": "ebpf dpi bypass as timing desynchronization", "url": "/posts/ebpf-dpi-bypass-as-timing-desynchronization/"},
     {"slug": "github-institutional-memory-loss", "title": "github institutional memory loss", "url": "/posts/github-institutional-memory-loss/"},
+    {"slug": "execution-context-integrity", "title": "execution context integrity", "url": "/posts/execution-context-integrity/"},
     {"slug": "index", "title": "kurisu", "url": "/"}
   ],
   "edges": [

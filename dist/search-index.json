@@ -64,6 +64,14 @@
     "excerpt": "Git is structurally decentralized. That is the easy part to say and the dangerous part to overbelieve."
   },
   {
+    "title": "execution context integrity",
+    "slug": "execution-context-integrity",
+    "url": "/posts/execution-context-integrity/",
+    "tags": ["systems", "security", "open-source"],
+    "collection": "posts",
+    "excerpt": "The reassuring thing about a hash is that it answers a question nobody has to argue about. Did these bytes change? No. The answer is exact, cheap, automatable, and angry when wrong."
+  },
+  {
     "title": "kurisu",
     "slug": "index",
     "url": "/",
