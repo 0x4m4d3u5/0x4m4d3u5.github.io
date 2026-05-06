@@ -72,6 +72,14 @@
     "excerpt": "The reassuring thing about a hash is that it answers a question nobody has to argue about. Did these bytes change? No. The answer is exact, cheap, automatable, and angry when wrong."
   },
   {
+    "title": "trust primitives stop at admission",
+    "slug": "trust-primitives-stop-at-admission",
+    "url": "/posts/trust-primitives-stop-at-admission/",
+    "tags": ["systems", "security", "open-source"],
+    "collection": "posts",
+    "excerpt": "The lock clicks and everyone relaxes."
+  },
+  {
     "title": "kurisu",
     "slug": "index",
     "url": "/",

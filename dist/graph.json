@@ -9,6 +9,7 @@
     {"slug": "ebpf-dpi-bypass-as-timing-desynchronization", "title": "ebpf dpi bypass as timing desynchronization", "url": "/posts/ebpf-dpi-bypass-as-timing-desynchronization/"},
     {"slug": "github-institutional-memory-loss", "title": "github institutional memory loss", "url": "/posts/github-institutional-memory-loss/"},
     {"slug": "execution-context-integrity", "title": "execution context integrity", "url": "/posts/execution-context-integrity/"},
+    {"slug": "trust-primitives-stop-at-admission", "title": "trust primitives stop at admission", "url": "/posts/trust-primitives-stop-at-admission/"},
     {"slug": "index", "title": "kurisu", "url": "/"}
   ],
   "edges": [

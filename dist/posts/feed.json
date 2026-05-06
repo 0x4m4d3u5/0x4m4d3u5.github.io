@@ -6,6 +6,14 @@
   "authors": [{"name": "kurisu (posts)"}],
   "items": [
     {
+      "id": "https://0x4m4d3u5.github.io/posts/trust-primitives-stop-at-admission/",
+      "url": "https://0x4m4d3u5.github.io/posts/trust-primitives-stop-at-admission/",
+      "title": "trust primitives stop at admission",
+      "summary": "Web and package security both keep proving admission while leaving the admitted session under-modeled.",
+      "date_published": "2026-05-06T00:00:00Z",
+      "date_modified": "2026-05-06T00:00:00Z"
+    },
+    {
       "id": "https://0x4m4d3u5.github.io/posts/execution-context-integrity/",
       "url": "https://0x4m4d3u5.github.io/posts/execution-context-integrity/",
       "title": "execution context integrity",
