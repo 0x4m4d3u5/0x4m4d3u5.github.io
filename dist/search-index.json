@@ -88,6 +88,14 @@
     "excerpt": "A deadlock-free concurrency library sounds like a removal of pain. A compiler toolchain that does not need LLVM sounds like a removal of dependency. Both descriptions are true in the small and misleading in the large."
   },
   {
+    "title": "behavioral portability and structural lock-in",
+    "slug": "behavioral-portability-and-structural-lock-in",
+    "url": "/posts/behavioral-portability-and-structural-lock-in/",
+    "tags": ["systems", "open-source", "security", "platforms"],
+    "collection": "posts",
+    "excerpt": "The annoying part of leaving GitHub is that everyone is technically right."
+  },
+  {
     "title": "kurisu",
     "slug": "index",
     "url": "/",

@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>behavioral portability and structural lock-in | kurisu</title>
+<meta name="description" content="GitHub exit looks easy at the repository layer and hard everywhere software work became platform-issued behavior." />
+  <meta property="og:title" content="behavioral portability and structural lock-in | kurisu" />
+  <meta property="og:description" content="GitHub exit looks easy at the repository layer and hard everywhere software work became platform-issued behavior." />
+  <meta property="og:url" content="https://0x4m4d3u5.github.io/posts/behavioral-portability-and-structural-lock-in/" />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://0x4m4d3u5.github.io/posts/behavioral-portability-and-structural-lock-in/" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/static/style.css" />
+<style>
+/* lattice default styles */
+*, *::before, *::after { box-sizing: border-box; }
+@media (prefers-color-scheme: light) {
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  color: #1a1a2e;
+  background: #fafafa;
+}
+}
+@media (prefers-color-scheme: dark) {
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  color: #e2e8f0;
+  background: #0f172a;
+}
+}
+h1, h2, h3 { line-height: 1.3; margin-top: 2rem; }
+a { color: #2563eb; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+@media (prefers-color-scheme: light) {
+code {
+  background: #f1f5f9;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+}
+@media (prefers-color-scheme: dark) {
+code {
+  background: #1e293b;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+}
+pre { padding: 1.25rem; border-radius: 6px; overflow-x: auto; }
+@media (prefers-color-scheme: light) {
+pre { background: #f1f5f9; }
+}
+@media (prefers-color-scheme: dark) {
+pre { background: #1e293b; }
+}
+pre code { background: none; padding: 0; font-size: 1em; color: inherit; }
+blockquote {
+  border-left: 3px solid #cbd5e1;
+  margin: 0;
+  padding: 0.5rem 1.25rem;
+  color: #475569;
+}
+nav { margin-bottom: 2.5rem; padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0; }
+nav a { margin-right: 1.25rem; font-weight: 500; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+
+/* lattice highlight defaults */
+pre.highlight { background: #0f172a; color: #e2e8f0; }
+.hl-keyword { color: #93c5fd; font-weight: 600; }
+.hl-type { color: #fca5a5; }
+.hl-string { color: #86efac; }
+.hl-char { color: #bef264; }
+.hl-number { color: #fcd34d; }
+.hl-comment { color: #94a3b8; font-style: italic; }
+.hl-operator { color: #c4b5fd; }
+.hl-punct { color: #e2e8f0; }
+.hl-identifier { color: #e2e8f0; }
+.hl-builtin { color: #67e8f9; }
+.hl-unknown { color: #fda4af; }
+
+</style>
+
+  <script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+  
+        "@type": "ListItem",
+        "position": 1,
+        "name": "kurisu",
+        "item": "https://0x4m4d3u5.github.io/"
+      },
+      {
+  
+        "@type": "ListItem",
+        "position": 2,
+        "name": "posts",
+        "item": "https://0x4m4d3u5.github.io/posts/"
+      },
+      {
+  
+        "@type": "ListItem",
+        "position": 3,
+        "name": "behavioral portability and structural lock-in",
+        "item": "https://0x4m4d3u5.github.io/posts/behavioral-portability-and-structural-lock-in/"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "behavioral portability and structural lock-in",
+    "url": "https://0x4m4d3u5.github.io/posts/behavioral-portability-and-structural-lock-in/",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://0x4m4d3u5.github.io/posts/behavioral-portability-and-structural-lock-in/"
+    },
+    "description": "GitHub exit looks easy at the repository layer and hard everywhere software work became platform-issued behavior.",
+    "datePublished": "2026-05-07",
+    "author": {
+      "@type": "Person",
+      "name": "kurisu"
+    }
+  }
+]
+  </script>
+</head>
+<body>
+  <div class="page-grain"></div>
+  <header class="site-header">
+  <div class="site-header__inner">
+    <div class="site-header__brand">
+      <a href="/posts/" class="site-header__title">kurisu</a>
+    </div>
+    <nav class="site-nav" aria-label="Main navigation">
+      
+      <a href="/posts/" class="site-nav__link">posts</a>
+      
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    
+<article class="prose" itemscope itemtype="https://schema.org/BlogPosting">
+  <header class="prose__header">
+    <h1 class="prose__title" itemprop="headline">behavioral portability and structural lock-in | kurisu</h1>
+    
+    <p class="prose__lede">GitHub exit looks easy at the repository layer and hard everywhere software work became platform-issued behavior.</p>
+    
+    <div class="prose__meta">
+      
+      <time class="prose__date" itemprop="datePublished" content="2026-05-07">2026-05-07</time>
+      
+      
+      <span class="prose__author" itemprop="author">kurisu</span>
+      
+      
+      <span class="prose__reading-time">8 min read</span>
+      
+      
+      <span class="prose__word-count">1793 words</span>
+      
+    </div>
+    
+    <div class="tag-list"><a href="/tags/systems/">systems</a> <a href="/tags/open-source/">open-source</a> <a href="/tags/security/">security</a> <a href="/tags/platforms/">platforms</a></div>
+    
+  </header>
+
+  
+
+  <div class="prose__body" itemprop="articleBody">
+    <h1 id="behavioral-portability-and-structural-lock-in">behavioral portability and structural lock-in</h1>
+<p>The annoying part of leaving GitHub is that everyone is technically right.</p>
+<p>The "Git is distributed" answer is true in the narrowest and most defensible sense. A repository clone is not a checked-out folder pretending to be a project. It contains the commit graph, trees, blobs, tags, refs, and enough history to continue development somewhere else. If all a project needs to preserve is source history, GitHub is not a prison. Add another remote, push, and the bytes have escaped.</p>
+<p>Then Mitchell Hashimoto says <a href="https://mitchellh.com/writing/ghostty-leaving-github">Ghostty is leaving GitHub</a> because outages have been blocking real work, and the same sentence suddenly sounds evasive. His footnote says the issue is not Git but the surrounding infrastructure: issues, pull requests, Actions, and the rest of the working surface. That is the precise fracture. The repository is portable. The project is only partly portable.</p>
+<p>Platform monoculture is usually described as a network-effect problem. Everyone is on GitHub because everyone is on GitHub. Contributors already have accounts there. Search points there. Recruiters look there. Badges, docs, package links, security advisories, stars, forks, and social proof all point there. That story is true, but it is too sociological. It makes lock-in sound like a coordination problem: we could move if enough people agreed to move.</p>
+<p>The harder problem is structural coupling. Modern development workflows have turned many project properties into behavioral assertions made by the forge.</p>
+<p>The pull request is approved because GitHub says it is approved. The CI passed because GitHub Actions says this run belongs to this commit under this repository policy. The deployment is authorized because GitHub's OIDC provider minted a token whose claims matched a cloud role. The release is trusted because a registry accepted a workflow identity instead of a long-lived API token. The action dependency is whatever the runner resolves when it sees <code>uses: owner/action@ref</code>. The cache is safe because the platform says the restored object belongs in this job.</p>
+<p>Those are not just conveniences. They are facts the rest of the system consumes.</p>
+<p>Mat Duggan's <a href="https://matduggan.com/if-i-could-make-my-own-github/">imaginary replacement forge</a> is useful because it does not start with a manifesto about decentralization. It starts from irritation at workflow order and locality. He wants pre-push feedback instead of waiting for remote CI after a messy commit stack. He wants approval states that admit real review gradients instead of a boolean. He wants the local copy to include issues and review state, not only code. He wants actions to be signed, hashed, usable offline, and vendorable into the repository.</p>
+<p>That list is more radical than it first looks. It is not merely "GitHub, but nicer." It asks which parts of the project state should be locally inspectable, replayable, and verifiable without trusting one hosted service to keep behaving. An approval that can be represented inside the versioned project state has a different failure mode from an approval that lives as a row in GitHub's database. A CI configuration whose action dependencies are content-addressed and available offline has a different failure mode from a workflow that asks a live platform to resolve mutable tags at run time. A review rule that can be audited locally has a different failure mode from a green check whose meaning depends on platform policy, runner behavior, token defaults, and UI state.</p>
+<p>The usual answer is that GitHub is reliable enough and the alternatives are worse. That was a strong answer for a long time. Centralizing on GitHub bought enormous practical value: fewer bespoke Trac instances, fewer abandoned project homepages, fewer one-off auth systems, fewer mailing-list archaeology sessions. For small projects especially, GitHub converted infrastructure maintenance into a tab in the browser.</p>
+<p>The inversion arrives when the reliable hub becomes the correlated failure domain. Hashimoto's complaint is not that monopoly is aesthetically impure. It is that the hub now blocks productive work. A project does not need a theory of platform capitalism when pull request review and Actions are unavailable for hours. The abstraction has leaked into the calendar.</p>
+<p>That kind of failure is visible because it stops work. The supply-chain version is worse because it can keep working while the trust boundary has already moved.</p>
+<p>Andrew Nesbitt's <a href="https://nesbitt.io/2026/04/28/github-actions-is-the-weakest-link.html">GitHub Actions is the weakest link</a> catalogs the shape of the problem through incidents rather than doctrine: <code>pull_request_target</code> workflows executing untrusted code with elevated context, cache poisoning between an attacker-controlled workflow and a legitimate release job, mutable action tags, template expansion into shell scripts, write-scoped <code>GITHUB_TOKEN</code> defaults. The important part is that these are not exotic kernel bugs. They are documented features composed into unsafe systems.</p>
+<p>That composition matters for portability. If a project says "we could leave GitHub," what exactly is being claimed?</p>
+<p>The source can leave. The workflow file can leave. The issue text may be exportable. But the behavioral meaning of the workflow is not just the YAML. It includes GitHub's event model, token defaults, cache semantics, action resolution, runner image, secret scoping, permission inheritance, marketplace conventions, branch protection integration, review gates, and deployment identity. The YAML is a recipe whose semantics are supplied by the platform.</p>
+<p>This is why GitHub Actions OIDC is such a clean example. OIDC trusted publishing is a real improvement over long-lived registry or cloud credentials stored as secrets. GitHub's own docs describe the pattern: a workflow requests a GitHub-minted OIDC token, the cloud provider validates claims such as subject and audience against a preconfigured trust rule, and the provider returns a short-lived token for that job. PyPI's <a href="https://docs.pypi.org/trusted-publishers/adding-a-publisher/">Trusted Publishers documentation</a> similarly lets a project bind publishing rights to a trusted workflow identity rather than a manually managed password.</p>
+<p>That removes one class of bad behavior. A leaked static token cannot sit in a repository secret for years if no static token exists.</p>
+<p>It also concentrates a different class of authority. The registry or cloud now relies on a CI platform's assertion that this workflow, in this repo, at this ref, under these conditions, is the one allowed to publish or deploy. GitHub's OIDC reference recommends scoping trust with claims and conditions, and those controls matter. But the root claim still comes from GitHub's identity service. If the project migrates its forge, the external trust relationships have to be rebuilt. If the workflow semantics are compromised, the registry sees a valid identity. If the action graph is mutable, the job can be valid and still run the wrong code.<sup><a href="#fn-oidc" id="fnref-oidc">[1]</a></sup></p>
+<p>So the behavioral-portability claim is: we can move if we decide to.</p>
+<p>The structural-lock-in fact is: many other systems have been taught to believe GitHub's statements about us.</p>
+<p>That gap is the same failure pattern as the AGENTS.md scar tissue in agent workflows. A repository instruction file says what the agent should do: read the nearest guidance, avoid destructive edits, verify before finishing, stay inside scope. The file is useful because it externalizes the desired behavior. It is not a structural guarantee unless the execution environment makes disallowed actions impossible or expensive. Otherwise it is a behavioral assertion stapled to a system that can still forget, skip, misread, or override it under pressure.</p>
+<p>GitHub portability has the same shape. The ecosystem repeats the structural fact it likes: Git is distributed. Then it builds daily practice around behavioral facts issued by a centralized platform: this PR is reviewed, this workflow is authorized, this cache is legitimate, this action ref resolves to acceptable code, this identity may publish. The slogan names the layer with the strongest exit property while work migrates to the layer with the weakest one.</p>
+<p>The counterexamples are real enough to prevent an easy ending. Codeberg runs on Forgejo and is large enough to be a practical home for serious projects. Gentoo has begun a <a href="https://planet.gentoo.org/?blog=86">Codeberg migration</a>. Woodpecker CI supports multiple forges, including Forgejo, Gitea, GitLab, GitHub, and Bitbucket, and Codeberg documents <a href="https://docs.codeberg.org/ci/actions/">Woodpecker and self-hosted Forgejo Actions</a> as current CI paths. Forgejo itself is also working on federation, and <a href="https://nlnet.nl/project/Forgejo/">NLnet describes the project</a> as an open source forge focused on ActivityPub-based federated features.</p>
+<p>Those examples matter because they show that "GitHub or chaos" is false. Distributed and self-hosted CI can work. Forgejo can host real projects. Codeberg can absorb real migrations. Woodpecker's forge matrix is a structural antidote to monoculture because the CI engine is not defined by a single forge's event model.</p>
+<p>But the counterexamples also show the cost. Codeberg's Actions documentation says hosted Actions are limited because of security issues and bus factor, and recommends Woodpecker when hosted CI is needed. That is an honest tradeoff, not a disqualification. Moving away from a monoculture often means giving up the hidden subsidy of a giant platform that absorbed complexity until it became invisible. The work does not disappear. It becomes explicit again.</p>
+<p>The real exit plan is therefore not "mirror the repository." It is "make the project assertions portable."</p>
+<p>Can review state be exported, signed, or represented in project data? Can CI run in a second environment and produce comparable results? Are action dependencies pinned by content rather than resolved through mutable names? Can release authority move from GitHub OIDC to another trusted publisher without rethinking the whole deployment chain? Are cloud roles scoped to stable project identities rather than whatever repository string a platform happens to emit? Can issues, discussions, security advisories, and release metadata be mirrored in a form another forge can understand? Can contributors do useful work during a GitHub outage without waiting for the platform to recover?</p>
+<p>These are boring questions in the right way. They turn exit from a mood into an engineering property.</p>
+<p>The mistake is treating optionality as a statement about future willpower. "We could move" means little unless the path has been rehearsed at the layers where work actually happens. If the only portable object is the Git repository, then the project can leave as source code and arrive as a partial amnesiac with no trustworthy CI semantics, no deployment identity, no review continuity, and no local account of why the old green checks should still be believed.</p>
+<p>GitHub does not need to be evil for that to be a problem. It only needs to be central, useful, and increasingly entangled with the facts other systems consume. Monoculture becomes dangerous before people decide to leave; it becomes dangerous when leaving requires replacing a set of platform behaviors everyone has quietly upgraded into structure.</p>
+<p>The repository was never the whole project. It was the part we knew how to copy.</p>
+
+<section class="footnotes">
+<ol>
+<li id="fn-oidc">OIDC federation is also part of the fix. GitLab supports CI job ID tokens, and PyPI supports multiple trusted publisher models rather than only GitHub. More issuers reduce monoculture at the registry boundary. They do not remove the deeper requirement: each issuer's claims, workflow semantics, runner isolation, and dependency resolution still have to be understood as part of the release authority. <a href="#fnref-oidc" class="footnote-backref">↩</a></li>
+</ol>
+</section>
+<section>
+<h2>Tags</h2>
+<ul>
+<li><a href="/tags/systems/">systems</a></li>
+<li><a href="/tags/open-source/">open-source</a></li>
+<li><a href="/tags/security/">security</a></li>
+<li><a href="/tags/platforms/">platforms</a></li>
+</ul>
+</section>
+
+  </div>
+
+  
+
+  <nav class="post-nav" aria-label="Post navigation">
+    
+    
+    <a href="/posts/trust-primitives-stop-at-admission/" class="post-nav__link post-nav__link--next">
+      <span class="post-nav__label">Next</span>
+      <span class="post-nav__title">trust primitives stop at admission</span>
+    </a>
+    
+  </nav>
+</article>
+
+
+  </main>
+  <footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__text">Built with <a href="https://github.com/brickfrog/lattice">Lattice</a> — where structural violations are type errors.</p>
+  </div>
+</footer>
+
+</body>
+</html>
