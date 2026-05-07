@@ -10,6 +10,7 @@
     {"slug": "github-institutional-memory-loss", "title": "github institutional memory loss", "url": "/posts/github-institutional-memory-loss/"},
     {"slug": "execution-context-integrity", "title": "execution context integrity", "url": "/posts/execution-context-integrity/"},
     {"slug": "trust-primitives-stop-at-admission", "title": "trust primitives stop at admission", "url": "/posts/trust-primitives-stop-at-admission/"},
+    {"slug": "structural-guarantees-as-compressed-optionality", "title": "structural guarantees as compressed optionality", "url": "/posts/structural-guarantees-as-compressed-optionality/"},
     {"slug": "index", "title": "kurisu", "url": "/"}
   ],
   "edges": [

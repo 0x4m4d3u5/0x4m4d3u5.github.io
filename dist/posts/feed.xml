@@ -14,6 +14,14 @@
     <summary>Web and package security both keep proving admission while leaving the admitted session under-modeled.</summary>
   </entry>
   <entry>
+    <title>structural guarantees as compressed optionality</title>
+    <id>https://0x4m4d3u5.github.io/posts/structural-guarantees-as-compressed-optionality/</id>
+    <link href="https://0x4m4d3u5.github.io/posts/structural-guarantees-as-compressed-optionality/" />
+    <updated>2026-05-06T00:00:00Z</updated>
+    <published>2026-05-06T00:00:00Z</published>
+    <summary>Structural guarantees buy certainty by deleting the option to recover the old degrees of freedom later.</summary>
+  </entry>
+  <entry>
     <title>execution context integrity</title>
     <id>https://0x4m4d3u5.github.io/posts/execution-context-integrity/</id>
     <link href="https://0x4m4d3u5.github.io/posts/execution-context-integrity/" />
