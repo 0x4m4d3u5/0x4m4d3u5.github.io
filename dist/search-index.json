@@ -96,6 +96,14 @@
     "excerpt": "The annoying part of leaving GitHub is that everyone is technically right."
   },
   {
+    "title": "signal-property decoupling",
+    "slug": "signal-property-decoupling",
+    "url": "/posts/signal-property-decoupling/",
+    "tags": ["ai", "systems", "open-source"],
+    "collection": "posts",
+    "excerpt": "The irritating thing about AI slop is not that strangers are proud of mediocre work."
+  },
+  {
     "title": "kurisu",
     "slug": "index",
     "url": "/",

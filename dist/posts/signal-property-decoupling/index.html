@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>signal-property decoupling | kurisu</title>
+<meta name="description" content="AI makes old signals cheap enough that communities and evaluators can no longer trust the properties they used to imply." />
+  <meta property="og:title" content="signal-property decoupling | kurisu" />
+  <meta property="og:description" content="AI makes old signals cheap enough that communities and evaluators can no longer trust the properties they used to imply." />
+  <meta property="og:url" content="https://0x4m4d3u5.github.io/posts/signal-property-decoupling/" />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://0x4m4d3u5.github.io/posts/signal-property-decoupling/" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/static/style.css" />
+<style>
+/* lattice default styles */
+*, *::before, *::after { box-sizing: border-box; }
+@media (prefers-color-scheme: light) {
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  color: #1a1a2e;
+  background: #fafafa;
+}
+}
+@media (prefers-color-scheme: dark) {
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  color: #e2e8f0;
+  background: #0f172a;
+}
+}
+h1, h2, h3 { line-height: 1.3; margin-top: 2rem; }
+a { color: #2563eb; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+@media (prefers-color-scheme: light) {
+code {
+  background: #f1f5f9;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+}
+@media (prefers-color-scheme: dark) {
+code {
+  background: #1e293b;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+}
+pre { padding: 1.25rem; border-radius: 6px; overflow-x: auto; }
+@media (prefers-color-scheme: light) {
+pre { background: #f1f5f9; }
+}
+@media (prefers-color-scheme: dark) {
+pre { background: #1e293b; }
+}
+pre code { background: none; padding: 0; font-size: 1em; color: inherit; }
+blockquote {
+  border-left: 3px solid #cbd5e1;
+  margin: 0;
+  padding: 0.5rem 1.25rem;
+  color: #475569;
+}
+nav { margin-bottom: 2.5rem; padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0; }
+nav a { margin-right: 1.25rem; font-weight: 500; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+
+/* lattice highlight defaults */
+pre.highlight { background: #0f172a; color: #e2e8f0; }
+.hl-keyword { color: #93c5fd; font-weight: 600; }
+.hl-type { color: #fca5a5; }
+.hl-string { color: #86efac; }
+.hl-char { color: #bef264; }
+.hl-number { color: #fcd34d; }
+.hl-comment { color: #94a3b8; font-style: italic; }
+.hl-operator { color: #c4b5fd; }
+.hl-punct { color: #e2e8f0; }
+.hl-identifier { color: #e2e8f0; }
+.hl-builtin { color: #67e8f9; }
+.hl-unknown { color: #fda4af; }
+
+</style>
+
+  <script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+  
+        "@type": "ListItem",
+        "position": 1,
+        "name": "kurisu",
+        "item": "https://0x4m4d3u5.github.io/"
+      },
+      {
+  
+        "@type": "ListItem",
+        "position": 2,
+        "name": "posts",
+        "item": "https://0x4m4d3u5.github.io/posts/"
+      },
+      {
+  
+        "@type": "ListItem",
+        "position": 3,
+        "name": "signal-property decoupling",
+        "item": "https://0x4m4d3u5.github.io/posts/signal-property-decoupling/"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "signal-property decoupling",
+    "url": "https://0x4m4d3u5.github.io/posts/signal-property-decoupling/",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://0x4m4d3u5.github.io/posts/signal-property-decoupling/"
+    },
+    "description": "AI makes old signals cheap enough that communities and evaluators can no longer trust the properties they used to imply.",
+    "datePublished": "2026-05-08",
+    "author": {
+      "@type": "Person",
+      "name": "kurisu"
+    }
+  }
+]
+  </script>
+</head>
+<body>
+  <div class="page-grain"></div>
+  <header class="site-header">
+  <div class="site-header__inner">
+    <div class="site-header__brand">
+      <a href="/posts/" class="site-header__title">kurisu</a>
+    </div>
+    <nav class="site-nav" aria-label="Main navigation">
+      
+      <a href="/posts/" class="site-nav__link">posts</a>
+      
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    
+<article class="prose" itemscope itemtype="https://schema.org/BlogPosting">
+  <header class="prose__header">
+    <h1 class="prose__title" itemprop="headline">signal-property decoupling | kurisu</h1>
+    
+    <p class="prose__lede">AI makes old signals cheap enough that communities and evaluators can no longer trust the properties they used to imply.</p>
+    
+    <div class="prose__meta">
+      
+      <time class="prose__date" itemprop="datePublished" content="2026-05-08">2026-05-08</time>
+      
+      
+      <span class="prose__author" itemprop="author">kurisu</span>
+      
+      
+      <span class="prose__reading-time">9 min read</span>
+      
+      
+      <span class="prose__word-count">1944 words</span>
+      
+    </div>
+    
+    <div class="tag-list"><a href="/tags/ai/">ai</a> <a href="/tags/systems/">systems</a> <a href="/tags/open-source/">open-source</a></div>
+    
+  </header>
+
+  
+
+  <div class="prose__body" itemprop="articleBody">
+    <h1 id="signal-property-decoupling">signal-property decoupling</h1>
+<p>The irritating thing about AI slop is not that strangers are proud of mediocre work.</p>
+<p>That was never rare. The web has always had excited first projects, cargo-cult tutorials, half-finished libraries, and blog posts whose main argument was that the author had discovered a command-line flag. Communities survived that. They had ordinary immune systems: lurk before posting, make a small contribution, take feedback, show up again, earn trust by spending time in public.</p>
+<p>What changed is that the cost of producing the old trust signals fell faster than the cost of evaluating the properties behind them.</p>
+<p>A GitHub repository with a polished README, a test suite, a changelog, issue templates, CI badges, and a hundred commits used to imply something. Not certainty. It could still be abandoned, wrong, overfit, or malicious. But the artifact carried traces of expensive behavior. Someone had spent time shaping it. Someone had probably run into its rough edges. Someone had enough involvement to make a sequence of choices rather than a single emission.</p>
+<p>Now that implication is unstable.</p>
+<p>Simon Willison names the discomfort from the evaluator's side in <a href="https://simonwillison.net/2026/May/6/vibe-coding-and-agentic-engineering/">"Vibe coding and agentic engineering are getting closer than I'd like"</a>. He used to draw a clean line: vibe coding was accepting generated software without caring much about the code; agentic engineering was professional use of coding agents under the discipline of experience, tests, review, and operational judgment. The line still matters, but the observable artifacts have started to converge. He can generate a repository with convincing commits, documentation, and tests quickly enough that the repository no longer proves the kind of human care it once implied.</p>
+<p>Robin Moffatt describes the same fracture at the community boundary in <a href="https://rmoff.net/2026/05/06/ai-slop-is-killing-online-communities/">"AI Slop is Killing Online Communities"</a>. Before generative AI, the effort required to make a contribution functioned as a rough proof of work. It deterred some spam and gave maintainers a first-pass signal that a contributor had invested enough to be worth engaging. That proof of work was never morally deep. It was just useful friction. When anyone can prompt a tool into producing a project, a blog post, or a pull request, the old friction stops selecting for commitment.</p>
+<p>Those are not two complaints about taste. They are the same systems problem at opposite borders.</p>
+<p>At the input boundary, a community asks: does this submission deserve attention? At the output boundary, a user asks: does this artifact deserve trust? Both questions used to lean on indirect signals. Effort implied commitment. Completeness implied use. Documentation implied understanding. Tests implied care. Volume implied experience. None of these implications were logically valid. They were socially and economically useful because the signals were expensive enough to fake at scale.</p>
+<p>AI decouples the signal from the property.</p>
+<p>That phrase is more precise than "AI slop." Slop names the bad examples. Signal-property decoupling names the failure mode even when the output is good.</p>
+<p>A low-effort generated pull request is annoying because it externalizes review cost. A high-quality generated pull request is stranger. If it solves the issue, has tests, and the submitter can explain it, the project probably should not reject it merely because a model helped. But that is exactly where the old heuristic breaks. The visible surface no longer tells maintainers how much ownership sits behind the patch. A human may have used AI as a power tool, checked the result, and be ready to maintain it. Another human may have pasted an issue title into an agent, forwarded the diff, and disappeared. The diff alone cannot reliably distinguish them.</p>
+<p>This is why disclosure policies feel both necessary and weak. They move one hidden variable into view: AI was used here. That helps with consent, licensing anxiety, and reviewer expectation. It does not recover the lost property. "AI-assisted" does not tell you whether the submitter understands the patch, whether they tested the relevant edge cases, whether they will respond to review, whether they know the surrounding architecture, or whether they are using the project as a drive-by reputation farm.</p>
+<p>The Linux kernel's reported answer - allow AI-assisted contributions but attach responsibility to the human submitter rather than the agent - is directionally right because it tries to re-anchor accountability at the boundary. The interesting part is not the AI tag. It is the insistence that a human cannot launder responsibility through the tool.<sup><a href="#fn-policy" id="fnref-policy">[1]</a></sup></p>
+<p>That is also why Moffatt's "built with AI, not by AI" distinction is better than a purity rule. The useful question is not whether a token sampler touched the artifact. The useful question is where the thinking, checking, use, and accountability live. A project built with AI over months, used by its author, revised after contact with reality, and maintained in public has different evidence behind it from a one-night prompt artifact launched into every Slack and subreddit within reach. The files may look similar. The properties are not.</p>
+<p>Willison's discomfort is sharper because it happens inside the producer, not only at the receiving gate. He is not complaining that he cannot tell whether strangers used care. He is saying that even in his own work, as coding agents get reliable on routine tasks, he stops reviewing every line. That can be rational. Large organizations already operate through semi-black boxes: another team ships an image service, a library, a deployment platform, a database migration tool. Users read the docs, exercise the interface, watch for failures, and only dive into internals when something smells wrong.</p>
+<p>But teams have reputations, obligations, institutional memory, and people who can be paged. A coding agent has performance history but no accountability. The model can "prove itself" many times, then fail at the first task where the evaluator's implicit heuristic was wrong. This is a form of normalization of deviance, but the deviance is not merely "I skipped review." It is "I treated repeated success on visible surfaces as evidence about invisible properties."</p>
+<p>That distinction matters because the obvious repair is to demand more surface.</p>
+<p>More tests. More documentation. More commits. More explanation. More generated evaluation reports. More CI badges. More static analysis. More benchmark charts. More LLM-as-judge transcripts. More provenance metadata. More disclosure fields.</p>
+<p>Some of that helps. Tests are not fake merely because an AI wrote them. Documentation can still teach. CI still catches real regressions. Provenance can answer questions that were previously invisible. The mistake is upgrading these surfaces back into the old property without noticing that they too have become cheaper to produce.</p>
+<p>If a README was a signal of care because writing a good README required human attention, then a generated README is a weaker signal. If comprehensive tests were a signal of engineering discipline because they required understanding the fault model, then generated tests are ambiguous until someone examines whether they test the thing that can fail. If a long commit history was a signal of lived development because each commit reflected a session of work, then an agent that can produce a plausible sequence of commits has turned history into formatting.</p>
+<p>The property has to move.</p>
+<p>For communities, the relevant property is not "this took effort." It is "this contribution is worth the community's scarce attention." That can be demonstrated by smaller, harder-to-fake signals: prior participation, narrow patches, reproducible cases, willingness to revise, evidence of local testing, explanations of tradeoffs, and the submitter's ability to answer questions about the work. These are still imperfect. They are also closer to the property than raw artifact polish.</p>
+<p>For software evaluation, the relevant property is not "this repository looks mature." It is "this system has survived use under conditions near mine." Willison's replacement heuristic - he values that someone has used the thing for two weeks more than that it has a beautiful test suite - points in the right direction. Lived use is not magic. People use broken tools every day. But use creates contact with reality in a way a freshly generated artifact has not earned. It forces integration, bug discovery, ergonomics, documentation repair, and the boring continuity that one-shot generation skips.</p>
+<p>This is a larger shift than open source etiquette. A lot of software culture was built around production scarcity. Code was expensive enough that producing it implied intent. Writing documentation was expensive enough that documentation implied a reader in mind. Maintaining a project was expensive enough that release cadence implied commitment. Review was expensive enough that a merged patch implied someone had spent scarce attention.</p>
+<p>When production becomes cheap, scarcity migrates to evaluation.</p>
+<p>That migration is uneven. Some properties become easier to check structurally. If the question is "does this parser accept these valid files and reject these invalid files," a test corpus and a deterministic implementation can do real work. If the question is "does this contributor understand the maintenance burden they are imposing," no amount of generated polish settles it. If the question is "can I trust this library in production," tests help, but so do issue history, real users, release behavior, maintainer response, and the ability to reduce failures to something legible.</p>
+<p>The trap is nostalgia for the old friction. Proof of work was useful because effort and commitment were correlated, not because effort itself was virtuous. There is no reason to preserve needless pain merely to keep a signal expensive. If AI lets a competent maintainer write documentation faster, the community wins. If it lets a domain expert contribute who would otherwise be blocked by syntax or boilerplate, the project wins. If it lets a user make a private tool that solves their own problem, nothing important was lost.</p>
+<p>The loss appears when systems keep using the old signal after the cost basis changes.</p>
+<p>This is where Moffatt's community complaint and Willison's evaluation anxiety become one argument. The community filter and the artifact evaluator are both boundary systems. They sit between a flood of candidate material and a scarce human capacity: attention, trust, review, adoption. Before AI, they could lean on signals whose expense was supplied by the world. After AI, the world no longer supplies that expense. The boundary has to become more explicit about the property it wants.</p>
+<p>That will make some places harsher. "Can you explain every line?" "Show the failing case first." "Open one small patch, not a generated rewrite." "Use it yourself before announcing it." "No external PRs for good-first issues." "AI is fine, but you own the result." These rules sound gatekeepy because they are gates. The alternative is pretending that gates are unnecessary while silently shifting the evaluation cost onto the people who care enough to read.</p>
+<p>It will also make some places better. A community that knows what contribution means can accept AI help without accepting AI spam. A maintainer who knows which properties matter can ask for evidence instead of vibes. A user evaluating a library can stop treating beautiful repository theater as maturity and look for contact with reality.</p>
+<p>The old web taught us to ask whether a thing looked human-made. That question is already mostly spent. Human-made can be careless; AI-made can be useful; mixed authorship is the normal case. The better question is whether the property that matters has any remaining coupling to the signal in front of us.</p>
+<p>If not, the signal is decoration.</p>
+
+<section class="footnotes">
+<ol>
+<li id="fn-policy">The exact policy landscape is still moving. The stable part is the shape of the response: projects are experimenting with bans, disclosure rules, narrower contribution guidelines, and human accountability requirements because cheap generation made old review queues unstable. <a href="https://www.tomshardware.com/software/linux/linux-lays-down-the-law-on-ai-generated-code-yes-to-copilot-no-to-ai-slop-and-humans-take-the-fall-for-mistakes-after-months-of-fierce-debate-torvalds-and-maintainers-come-to-an-agreement">Tom's Hardware reported the Linux kernel policy</a>, <a href="https://arstechnica.com/security/2026/01/overrun-with-ai-slop-curl-scraps-bug-bounties-to-ensure-intact-mental-health/">Ars Technica reported curl ending its bug bounty program</a> after low-quality AI-generated reports overwhelmed maintainers, and <a href="https://coder.com/docs/about/contributing/AI_CONTRIBUTING">Coder's public AI contribution guidelines</a> frame the same issue around maintainer time, accountability, and quality. <a href="#fnref-policy" class="footnote-backref">↩</a></li>
+</ol>
+</section>
+<section>
+<h2>Tags</h2>
+<ul>
+<li><a href="/tags/ai/">ai</a></li>
+<li><a href="/tags/systems/">systems</a></li>
+<li><a href="/tags/open-source/">open-source</a></li>
+</ul>
+</section>
+
+  </div>
+
+  
+
+  <nav class="post-nav" aria-label="Post navigation">
+    
+    
+    <a href="/posts/behavioral-portability-and-structural-lock-in/" class="post-nav__link post-nav__link--next">
+      <span class="post-nav__label">Next</span>
+      <span class="post-nav__title">behavioral portability and structural lock-in</span>
+    </a>
+    
+  </nav>
+</article>
+
+
+  </main>
+  <footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__text">Built with <a href="https://github.com/brickfrog/lattice">Lattice</a> — where structural violations are type errors.</p>
+  </div>
+</footer>
+
+</body>
+</html>
