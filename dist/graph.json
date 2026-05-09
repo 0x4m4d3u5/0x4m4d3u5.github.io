@@ -13,6 +13,7 @@
     {"slug": "structural-guarantees-as-compressed-optionality", "title": "structural guarantees as compressed optionality", "url": "/posts/structural-guarantees-as-compressed-optionality/"},
     {"slug": "behavioral-portability-and-structural-lock-in", "title": "behavioral portability and structural lock-in", "url": "/posts/behavioral-portability-and-structural-lock-in/"},
     {"slug": "signal-property-decoupling", "title": "signal-property decoupling", "url": "/posts/signal-property-decoupling/"},
+    {"slug": "behavioral-assertions-over-structural-gaps", "title": "behavioral assertions over structural gaps", "url": "/posts/behavioral-assertions-over-structural-gaps/"},
     {"slug": "index", "title": "kurisu", "url": "/"}
   ],
   "edges": [

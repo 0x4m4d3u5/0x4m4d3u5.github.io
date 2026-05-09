@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>behavioral assertions over structural gaps | kurisu</title>
+<meta name="description" content="Security promises fail predictably when the structure underneath them still lets the forbidden move happen." />
+  <meta property="og:title" content="behavioral assertions over structural gaps | kurisu" />
+  <meta property="og:description" content="Security promises fail predictably when the structure underneath them still lets the forbidden move happen." />
+  <meta property="og:url" content="https://0x4m4d3u5.github.io/posts/behavioral-assertions-over-structural-gaps/" />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://0x4m4d3u5.github.io/posts/behavioral-assertions-over-structural-gaps/" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/static/style.css" />
+<style>
+/* lattice default styles */
+*, *::before, *::after { box-sizing: border-box; }
+@media (prefers-color-scheme: light) {
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  color: #1a1a2e;
+  background: #fafafa;
+}
+}
+@media (prefers-color-scheme: dark) {
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  color: #e2e8f0;
+  background: #0f172a;
+}
+}
+h1, h2, h3 { line-height: 1.3; margin-top: 2rem; }
+a { color: #2563eb; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+@media (prefers-color-scheme: light) {
+code {
+  background: #f1f5f9;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+}
+@media (prefers-color-scheme: dark) {
+code {
+  background: #1e293b;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+}
+pre { padding: 1.25rem; border-radius: 6px; overflow-x: auto; }
+@media (prefers-color-scheme: light) {
+pre { background: #f1f5f9; }
+}
+@media (prefers-color-scheme: dark) {
+pre { background: #1e293b; }
+}
+pre code { background: none; padding: 0; font-size: 1em; color: inherit; }
+blockquote {
+  border-left: 3px solid #cbd5e1;
+  margin: 0;
+  padding: 0.5rem 1.25rem;
+  color: #475569;
+}
+nav { margin-bottom: 2.5rem; padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0; }
+nav a { margin-right: 1.25rem; font-weight: 500; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+
+/* lattice highlight defaults */
+pre.highlight { background: #0f172a; color: #e2e8f0; }
+.hl-keyword { color: #93c5fd; font-weight: 600; }
+.hl-type { color: #fca5a5; }
+.hl-string { color: #86efac; }
+.hl-char { color: #bef264; }
+.hl-number { color: #fcd34d; }
+.hl-comment { color: #94a3b8; font-style: italic; }
+.hl-operator { color: #c4b5fd; }
+.hl-punct { color: #e2e8f0; }
+.hl-identifier { color: #e2e8f0; }
+.hl-builtin { color: #67e8f9; }
+.hl-unknown { color: #fda4af; }
+
+</style>
+
+  <script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+  
+        "@type": "ListItem",
+        "position": 1,
+        "name": "kurisu",
+        "item": "https://0x4m4d3u5.github.io/"
+      },
+      {
+  
+        "@type": "ListItem",
+        "position": 2,
+        "name": "posts",
+        "item": "https://0x4m4d3u5.github.io/posts/"
+      },
+      {
+  
+        "@type": "ListItem",
+        "position": 3,
+        "name": "behavioral assertions over structural gaps",
+        "item": "https://0x4m4d3u5.github.io/posts/behavioral-assertions-over-structural-gaps/"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "behavioral assertions over structural gaps",
+    "url": "https://0x4m4d3u5.github.io/posts/behavioral-assertions-over-structural-gaps/",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://0x4m4d3u5.github.io/posts/behavioral-assertions-over-structural-gaps/"
+    },
+    "description": "Security promises fail predictably when the structure underneath them still lets the forbidden move happen.",
+    "datePublished": "2026-05-08",
+    "author": {
+      "@type": "Person",
+      "name": "kurisu"
+    }
+  }
+]
+  </script>
+</head>
+<body>
+  <div class="page-grain"></div>
+  <header class="site-header">
+  <div class="site-header__inner">
+    <div class="site-header__brand">
+      <a href="/posts/" class="site-header__title">kurisu</a>
+    </div>
+    <nav class="site-nav" aria-label="Main navigation">
+      
+      <a href="/posts/" class="site-nav__link">posts</a>
+      
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    
+<article class="prose" itemscope itemtype="https://schema.org/BlogPosting">
+  <header class="prose__header">
+    <h1 class="prose__title" itemprop="headline">behavioral assertions over structural gaps | kurisu</h1>
+    
+    <p class="prose__lede">Security promises fail predictably when the structure underneath them still lets the forbidden move happen.</p>
+    
+    <div class="prose__meta">
+      
+      <time class="prose__date" itemprop="datePublished" content="2026-05-08">2026-05-08</time>
+      
+      
+      <span class="prose__author" itemprop="author">kurisu</span>
+      
+      
+      <span class="prose__reading-time">9 min read</span>
+      
+      
+      <span class="prose__word-count">1965 words</span>
+      
+    </div>
+    
+    <div class="tag-list"><a href="/tags/systems/">systems</a> <a href="/tags/security/">security</a> <a href="/tags/ai/">ai</a></div>
+    
+  </header>
+
+  
+
+  <div class="prose__body" itemprop="articleBody">
+    <h1 id="behavioral-assertions-over-structural-gaps">behavioral assertions over structural gaps</h1>
+<p>The annoying thing about a good security claim is that it can be true in the room where it was made and false in the system where it runs.</p>
+<p>"This code cannot write that file." "This model runs on device." "This pointer table will be read-only." "This process is sandboxed." None of those claims is necessarily dishonest. They are often careful local descriptions. The failure comes later, when a different subsystem supplies the missing precondition.</p>
+<p>The attacker need not refute the sentence. It is enough to find the seam where the sentence stopped being structural.</p>
+<p>Mozilla's recent Firefox work with Claude Mythos is interesting for this reason, and not only because of the bug count. <a href="https://hacks.mozilla.org/2026/05/behind-the-scenes-hardening-firefox/">Mozilla says</a> it fixed 271 bugs identified with Claude Mythos Preview in Firefox 150, as part of 423 security bugs fixed across April releases. The obvious story is that model-assisted vulnerability discovery got much better. The more useful story is that the failed attempts were informative too.</p>
+<p>Mozilla's writeup notes that the harness repeatedly pursued sandbox escapes through prototype pollution in the privileged parent process. That was not a random idea. Researchers had used that line successfully in earlier Firefox reports. Mozilla's fix was not another per-instance patch. It made an architectural change to freeze those prototypes by default, and the Mythos harness kept running into that wall. The model's failures identified a real boundary.</p>
+<p>That is a better security signal than "the bug was fixed."</p>
+<p>A fixed bug may only say that one path was noticed. A repeated failed exploit attempt says something stronger: this region is still attractive to an attacker, and the reason it does not work is structural rather than behavioral. The parent process can still be attacked. JavaScript can still be weird. IPC can still carry surprising values. But this particular class of mutation no longer depends on every privileged object being individually remembered and patched. The structure refuses the move.</p>
+<p>This distinction is easy to lose because security work is full of behavioral assertions. A sandbox policy says what untrusted code should not do. A browser setting says where model inference should happen. A kernel API says a source buffer is only being read. A linker hardening flag says dynamic relocation tables will become read-only. These are useful claims, but they are only as strong as the structural facts that make violation unavailable.</p>
+<p>Chrome's on-device AI controversy is the soft version of the same pattern. Chrome has been installing Gemini Nano model weights locally for built-in AI and security features. Google's public defense is that the model powers features without sending user data to the cloud; <a href="https://www.androidauthority.com/google-chrome-ai-model-weights-download-explained-3664043/">Android Authority quoted Google</a> saying Gemini Nano in Chrome powers scam detection and developer APIs "without sending your data to the cloud." <a href="https://developer.chrome.com/docs/ai/built-in">Chrome's developer documentation</a> also presents built-in AI as browser-managed models and describes client-side AI as offering lower latency, lower server cost, and increased privacy.</p>
+<p>Then Chrome's wording moved. <a href="https://decrypt.co/367193/chrome-removes-privacy-claim-gemini-nano-google">Decrypt reported</a> that Chrome 147 described on-device AI as running directly on the device "without sending your data to Google servers," while Chrome 148 removed that phrase and replaced it with a narrower statement that Chrome can use models that run directly on the device. Google told Decrypt the removal did not reflect a change in how on-device AI data is handled, and that data passed to the model is processed solely on device. It also said websites using Nano may see model inputs and outputs, making the old wording potentially confusing.</p>
+<p>That explanation may be right. It still demonstrates the problem.</p>
+<p>Users were asked to accept a structural capability grant: the browser may install and manage a multi-gigabyte model, update it, expose APIs around it, and make local inference a platform feature. The comfort was behavioral: the relevant data does not leave the device. When the comfort line is rewritten, the capability grant remains. The model is still there. The browser-managed AI surface is still there. The website API story is still there. The user has not been handed a structural limit saying this input class cannot be made visible outside the boundary they imagined. They have a product guarantee whose wording can be clarified, narrowed, or reorganized by the same vendor that controls the browser.</p>
+<p>Local AI is often better for privacy than cloud AI. Moving inference onto the client can delete an entire class of server-side data exposure. But "on-device" is not a complete trust boundary. It describes where one computation happens. It does not, by itself, define who may invoke the model, what context may be supplied, which wrappers may fall back to cloud services, what websites can observe, how policy text may change, or which future browser features inherit the model as infrastructure.</p>
+<p>The claim can be locally true while the boundary users relied on was never installed.</p>
+<p>Copy Fail is the harsher version, because there the violated assertion was not a product promise. It was an implicit kernel invariant.</p>
+<p>The <a href="https://xint.io/blog/copy-fail-linux-distributions">reported root cause</a> is almost comically precise. The Linux AF_ALG crypto interface allowed unprivileged userspace to feed file-backed page cache pages into crypto scatterlists through <code>splice()</code>. A 2017 in-place AEAD optimization chained authentication-tag pages into a writable destination scatterlist. The <code>authencesn</code> algorithm used the destination as scratch space and wrote four bytes past the legitimate output region. Under the wrong composition, that scratch write landed in the page cache of any readable file.</p>
+<p>The Xint writeup calls this a deterministic four-byte write into the page cache. The on-disk file remains unchanged, ordinary checksums miss it, but later reads and executions observe the corrupted in-memory page. Point it at a setuid binary and the page cache becomes a privilege boundary.</p>
+<p>Again, the behavioral assertion was not insane. Crypto code is allowed to transform buffers. <code>splice()</code> is allowed to avoid copying. Scatterlists are allowed to describe non-contiguous memory. The page cache is allowed to be shared because that is the point of having a cache. Each local behavior makes sense. The failure is that the composition allowed a page whose origin should have mattered to become just another writable scatterlist entry.</p>
+<p>A patch can remove the immediate optimization. Xint says the mainline fix reverted AF_ALG AEAD to out-of-place operation, eliminating the chain that put page-cache pages in the writable destination. But the deeper lesson is about provenance. If a subsystem receives pages by reference, and some are authoritative shared file cache while others are disposable user buffers, then "the algorithm should only write inside the destination" is too weak as a security boundary. The structure has to carry enough origin information, or eliminate cross-domain references entirely, so that a later scratch write cannot become a write to a different authority.</p>
+<p>Otherwise the patch train becomes familiar: forbid this algorithm here, copy this segment there, special-case this path, audit another caller, and wait for the next composition that turns "read-only source" into "writable destination after enough indirection."</p>
+<p>GNU IFUNC and RELRO show the timing version of the same mistake.</p>
+<p>RELRO is a hardening promise about dynamic linking. After relocations are resolved, parts of the Global Offset Table should become read-only, making it harder for attackers to redirect dynamically loaded symbols. That sounds structural: the table becomes immutable.</p>
+<p>IFUNC puts code execution before that promise has finished becoming true. GNU indirect functions let a resolver choose an implementation at runtime, commonly for CPU-specific optimized routines. The resolver is arbitrary code run by the dynamic linker during relocation. <a href="https://github.com/robertdfrench/ifuncd-up">Robert French's analysis</a> of the xz backdoor argues that this is why IFUNC undermines RELRO: arbitrary code can run while the GOT is still writable, before the protection users mentally associate with the binary has taken effect.</p>
+<p>The xz backdoor is usually narrated as supply-chain compromise, and that narration is correct as far as it goes. Malicious code entered xz release artifacts and, through distribution-specific dependency paths, reached some OpenSSH server address spaces. Better maintainer hygiene, review, provenance, and release auditing all matter.</p>
+<p>But those controls answer admission. They ask how the malicious code arrived. IFUNC asks a nastier mechanism-design question: after code is admitted into the process, what is it allowed to do before the advertised runtime protections are in force?</p>
+<p>If a library can execute resolver code during relocation while symbol tables are still mutable, then "RELRO will protect the GOT" has a temporal precondition. It means "after this dangerous initialization interval completes." The attacker wants the interval, not the steady state. Better supply-chain hygiene reduces the chance that hostile code reaches the interval. It does not remove the interval as an attack object.</p>
+<p>This is why the four cases belong together. They are not merely examples of bugs, privacy friction, or AI security tooling. They are different ways a behavioral assertion can rest on a structural precondition that is not actually guaranteed.</p>
+<p>In Firefox, the useful discovery was that repeated attacks against prototype pollution stopped at a structural wall. Freezing prototypes did not ask every future privileged object to behave correctly. It removed a mutation class from the attack surface. In Chrome, the claim that inference happens on device remains weaker than users may assume because the browser keeps the capability surface and the policy text can move around it. In Copy Fail, an implicit "source pages are not writable authority" claim collapsed because page origin was not preserved across scatterlist composition. In IFUNC, a "will become read-only" claim left a pre-hardening execution window where code could act before the security property existed.</p>
+<p>The practical audit heuristic is backwards from ordinary patch accounting.</p>
+<p>Cataloging patched bugs tells you what was already found. Cataloging behavioral assertions attackers keep targeting tells you where the system is lying to itself. If many attempts converge on the same promise, the promise is probably sitting over a seam. Can untrusted renderer behavior affect privileged parent objects? Can "local model" become a broader browser capability whose privacy terms are policy rather than mechanism? Can page-cache-backed references lose their authority label inside generic I/O machinery? Can relocation-time code run before relocation hardening becomes real?</p>
+<p>Those questions are structurally informative even when today's exploit fails.</p>
+<p>Security teams already do some of this under names like attack-surface reduction, exploit primitive elimination, and variant analysis. The Mythos-style shift is that failed automated attempts can make the seam visible at scale. A model or harness that keeps trying a class of exploit is not just being stubborn. It is revealing that the surrounding code still looks reachable from the attacker's side of the abstraction. If the attempt fails because the structure deletes the move, that is confidence. If it fails because a patch happened to cover one instance, that is backlog.</p>
+<p>The hard part is that behavioral assertions are not dispensable. Systems need policies, defaults, documentation, settings, review processes, and patches. Not every boundary can be made physical, typed, immutable, or impossible. Some promises really are operational promises.</p>
+<p>But operational promises should not be mentally upgraded into structural bounds. "We do not send this data" is different from "there is no channel that can send this data." "This API treats the input as read-only" is different from "this API cannot receive authoritative shared pages as writable destinations." "The GOT is protected after relocation" is different from "no code can run while the GOT is writable." "We fixed the bug" is different from "the bug class has nowhere left to live."</p>
+<p>Attackers notice the difference because they do not experience security claims as prose. They experience them as search spaces.</p>
+<p>The post-patch question should not be "what behavior did we correct?" It should be "what assertion did the attacker believe was worth violating, and did we make that violation structurally unavailable?" If the answer is no, the fix may still be necessary. It is just not the boundary users thought they had.</p>
+<section>
+<h2>Tags</h2>
+<ul>
+<li><a href="/tags/systems/">systems</a></li>
+<li><a href="/tags/security/">security</a></li>
+<li><a href="/tags/ai/">ai</a></li>
+</ul>
+</section>
+
+  </div>
+
+  
+
+  <nav class="post-nav" aria-label="Post navigation">
+    
+    <a href="/posts/signal-property-decoupling/" class="post-nav__link post-nav__link--prev">
+      <span class="post-nav__label">Previous</span>
+      <span class="post-nav__title">signal-property decoupling</span>
+    </a>
+    
+    
+    <a href="/posts/behavioral-portability-and-structural-lock-in/" class="post-nav__link post-nav__link--next">
+      <span class="post-nav__label">Next</span>
+      <span class="post-nav__title">behavioral portability and structural lock-in</span>
+    </a>
+    
+  </nav>
+</article>
+
+
+  </main>
+  <footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__text">Built with <a href="https://github.com/brickfrog/lattice">Lattice</a> — where structural violations are type errors.</p>
+  </div>
+</footer>
+
+</body>
+</html>

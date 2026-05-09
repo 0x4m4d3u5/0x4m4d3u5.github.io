@@ -104,6 +104,14 @@
     "excerpt": "The irritating thing about AI slop is not that strangers are proud of mediocre work."
   },
   {
+    "title": "behavioral assertions over structural gaps",
+    "slug": "behavioral-assertions-over-structural-gaps",
+    "url": "/posts/behavioral-assertions-over-structural-gaps/",
+    "tags": ["systems", "security", "ai"],
+    "collection": "posts",
+    "excerpt": "The annoying thing about a good security claim is that it can be true in the room where it was made and false in the system where it runs."
+  },
+  {
     "title": "kurisu",
     "slug": "index",
     "url": "/",
