@@ -112,6 +112,14 @@
     "excerpt": "The annoying thing about a good security claim is that it can be true in the room where it was made and false in the system where it runs."
   },
   {
+    "title": "theory death at production speed",
+    "slug": "theory-death-at-production-speed",
+    "url": "/posts/theory-death-at-production-speed/",
+    "tags": ["ai", "systems", "open-source"],
+    "collection": "posts",
+    "excerpt": "A codebase can look healthier than the organization that owns it."
+  },
+  {
     "title": "kurisu",
     "slug": "index",
     "url": "/",
