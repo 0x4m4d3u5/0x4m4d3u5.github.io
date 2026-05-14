@@ -120,6 +120,14 @@
     "excerpt": "A codebase can look healthier than the organization that owns it."
   },
   {
+    "title": "commercial deployment as governance bypass",
+    "slug": "commercial-deployment-as-governance-bypass",
+    "url": "/posts/commercial-deployment-as-governance-bypass/",
+    "tags": ["ai", "governance", "systems"],
+    "collection": "posts",
+    "excerpt": "Opt-out usually arrives after the decision it governs."
+  },
+  {
     "title": "kurisu",
     "slug": "index",
     "url": "/",

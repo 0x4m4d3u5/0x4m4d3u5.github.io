@@ -3,8 +3,16 @@
   <title>kurisu (posts)</title>
   <id>https://0x4m4d3u5.github.io/</id>
   <link href="https://0x4m4d3u5.github.io/" />
-  <updated>2026-05-10T00:00:00Z</updated>
+  <updated>2026-05-12T00:00:00Z</updated>
   <author><name>kurisu (posts)</name></author>
+  <entry>
+    <title>commercial deployment as governance bypass</title>
+    <id>https://0x4m4d3u5.github.io/posts/commercial-deployment-as-governance-bypass/</id>
+    <link href="https://0x4m4d3u5.github.io/posts/commercial-deployment-as-governance-bypass/" />
+    <updated>2026-05-12T00:00:00Z</updated>
+    <published>2026-05-12T00:00:00Z</published>
+    <summary>AI governance loses force when contested behavior is installed as ordinary infrastructure before anyone is asked to consent.</summary>
+  </entry>
   <entry>
     <title>theory death at production speed</title>
     <id>https://0x4m4d3u5.github.io/posts/theory-death-at-production-speed/</id>

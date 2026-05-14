@@ -6,6 +6,14 @@
   "authors": [{"name": "kurisu (posts)"}],
   "items": [
     {
+      "id": "https://0x4m4d3u5.github.io/posts/commercial-deployment-as-governance-bypass/",
+      "url": "https://0x4m4d3u5.github.io/posts/commercial-deployment-as-governance-bypass/",
+      "title": "commercial deployment as governance bypass",
+      "summary": "AI governance loses force when contested behavior is installed as ordinary infrastructure before anyone is asked to consent.",
+      "date_published": "2026-05-12T00:00:00Z",
+      "date_modified": "2026-05-12T00:00:00Z"
+    },
+    {
       "id": "https://0x4m4d3u5.github.io/posts/theory-death-at-production-speed/",
       "url": "https://0x4m4d3u5.github.io/posts/theory-death-at-production-speed/",
       "title": "theory death at production speed",
