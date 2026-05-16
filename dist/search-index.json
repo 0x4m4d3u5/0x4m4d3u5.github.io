@@ -128,6 +128,14 @@
     "excerpt": "Opt-out usually arrives after the decision it governs."
   },
   {
+    "title": "calibration collapse under ai acceleration",
+    "slug": "calibration-collapse-under-ai-acceleration",
+    "url": "/posts/calibration-collapse-under-ai-acceleration/",
+    "tags": ["ai", "systems", "open-source"],
+    "collection": "posts",
+    "excerpt": "The junior engineer is no longer blocked in the old way."
+  },
+  {
     "title": "kurisu",
     "slug": "index",
     "url": "/",

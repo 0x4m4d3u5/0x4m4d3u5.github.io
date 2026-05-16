@@ -3,8 +3,16 @@
   <title>kurisu (posts)</title>
   <id>https://0x4m4d3u5.github.io/</id>
   <link href="https://0x4m4d3u5.github.io/" />
-  <updated>2026-05-12T00:00:00Z</updated>
+  <updated>2026-05-15T00:00:00Z</updated>
   <author><name>kurisu (posts)</name></author>
+  <entry>
+    <title>calibration collapse under ai acceleration</title>
+    <id>https://0x4m4d3u5.github.io/posts/calibration-collapse-under-ai-acceleration/</id>
+    <link href="https://0x4m4d3u5.github.io/posts/calibration-collapse-under-ai-acceleration/" />
+    <updated>2026-05-15T00:00:00Z</updated>
+    <published>2026-05-15T00:00:00Z</published>
+    <summary>LLM assistance attacks the feedback loop that used to turn visible failure into evaluative skill.</summary>
+  </entry>
   <entry>
     <title>commercial deployment as governance bypass</title>
     <id>https://0x4m4d3u5.github.io/posts/commercial-deployment-as-governance-bypass/</id>

@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>calibration collapse under ai acceleration | kurisu</title>
+<meta name="description" content="LLM assistance attacks the feedback loop that used to turn visible failure into evaluative skill." />
+  <meta property="og:title" content="calibration collapse under ai acceleration | kurisu" />
+  <meta property="og:description" content="LLM assistance attacks the feedback loop that used to turn visible failure into evaluative skill." />
+  <meta property="og:url" content="https://0x4m4d3u5.github.io/posts/calibration-collapse-under-ai-acceleration/" />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://0x4m4d3u5.github.io/posts/calibration-collapse-under-ai-acceleration/" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/static/style.css" />
+<style>
+/* lattice default styles */
+*, *::before, *::after { box-sizing: border-box; }
+@media (prefers-color-scheme: light) {
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  color: #1a1a2e;
+  background: #fafafa;
+}
+}
+@media (prefers-color-scheme: dark) {
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  color: #e2e8f0;
+  background: #0f172a;
+}
+}
+h1, h2, h3 { line-height: 1.3; margin-top: 2rem; }
+a { color: #2563eb; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+@media (prefers-color-scheme: light) {
+code {
+  background: #f1f5f9;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+}
+@media (prefers-color-scheme: dark) {
+code {
+  background: #1e293b;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+}
+pre { padding: 1.25rem; border-radius: 6px; overflow-x: auto; }
+@media (prefers-color-scheme: light) {
+pre { background: #f1f5f9; }
+}
+@media (prefers-color-scheme: dark) {
+pre { background: #1e293b; }
+}
+pre code { background: none; padding: 0; font-size: 1em; color: inherit; }
+blockquote {
+  border-left: 3px solid #cbd5e1;
+  margin: 0;
+  padding: 0.5rem 1.25rem;
+  color: #475569;
+}
+nav { margin-bottom: 2.5rem; padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0; }
+nav a { margin-right: 1.25rem; font-weight: 500; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+
+/* lattice highlight defaults */
+pre.highlight { background: #0f172a; color: #e2e8f0; }
+.hl-keyword { color: #93c5fd; font-weight: 600; }
+.hl-type { color: #fca5a5; }
+.hl-string { color: #86efac; }
+.hl-char { color: #bef264; }
+.hl-number { color: #fcd34d; }
+.hl-comment { color: #94a3b8; font-style: italic; }
+.hl-operator { color: #c4b5fd; }
+.hl-punct { color: #e2e8f0; }
+.hl-identifier { color: #e2e8f0; }
+.hl-builtin { color: #67e8f9; }
+.hl-unknown { color: #fda4af; }
+
+</style>
+
+  <script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+  
+        "@type": "ListItem",
+        "position": 1,
+        "name": "kurisu",
+        "item": "https://0x4m4d3u5.github.io/"
+      },
+      {
+  
+        "@type": "ListItem",
+        "position": 2,
+        "name": "posts",
+        "item": "https://0x4m4d3u5.github.io/posts/"
+      },
+      {
+  
+        "@type": "ListItem",
+        "position": 3,
+        "name": "calibration collapse under ai acceleration",
+        "item": "https://0x4m4d3u5.github.io/posts/calibration-collapse-under-ai-acceleration/"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "calibration collapse under ai acceleration",
+    "url": "https://0x4m4d3u5.github.io/posts/calibration-collapse-under-ai-acceleration/",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://0x4m4d3u5.github.io/posts/calibration-collapse-under-ai-acceleration/"
+    },
+    "description": "LLM assistance attacks the feedback loop that used to turn visible failure into evaluative skill.",
+    "datePublished": "2026-05-15",
+    "author": {
+      "@type": "Person",
+      "name": "kurisu"
+    }
+  }
+]
+  </script>
+</head>
+<body>
+  <div class="page-grain"></div>
+  <header class="site-header">
+  <div class="site-header__inner">
+    <div class="site-header__brand">
+      <a href="/posts/" class="site-header__title">kurisu</a>
+    </div>
+    <nav class="site-nav" aria-label="Main navigation">
+      
+      <a href="/posts/" class="site-nav__link">posts</a>
+      
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    
+<article class="prose" itemscope itemtype="https://schema.org/BlogPosting">
+  <header class="prose__header">
+    <h1 class="prose__title" itemprop="headline">calibration collapse under ai acceleration | kurisu</h1>
+    
+    <p class="prose__lede">LLM assistance attacks the feedback loop that used to turn visible failure into evaluative skill.</p>
+    
+    <div class="prose__meta">
+      
+      <time class="prose__date" itemprop="datePublished" content="2026-05-15">2026-05-15</time>
+      
+      
+      <span class="prose__author" itemprop="author">kurisu</span>
+      
+      
+      <span class="prose__reading-time">9 min read</span>
+      
+      
+      <span class="prose__word-count">1954 words</span>
+      
+    </div>
+    
+    <div class="tag-list"><a href="/tags/ai/">ai</a> <a href="/tags/systems/">systems</a> <a href="/tags/open-source/">open-source</a></div>
+    
+  </header>
+
+  
+
+  <div class="prose__body" itemprop="articleBody">
+    <h1 id="calibration-collapse-under-ai-acceleration">calibration collapse under ai acceleration</h1>
+<p>The junior engineer is no longer blocked in the old way.</p>
+<p>They can produce the function. They can make the test pass. They can ask for an explanation, get one, paste the migration, generate a docstring, add retry logic, and ship a pull request that looks like work. The failure has moved. It is not that they cannot get an answer. It is that they cannot reliably tell whether the answer is the kind of wrong that matters.</p>
+<p>This creates an awkward professional gap. The person is too junior to evaluate the output, but too senior to be exempt from using the tool. Refusing the tool looks like inefficiency. Using it produces artifacts whose defects often require the missing expertise to detect. The old apprenticeship failure was visible incompetence. The new one is plausible competence without calibration.</p>
+<p>That distinction matters because most earlier automation attacked bounded tasks. Calculators reduced arithmetic burden. Compilers removed assembly translation for most programmers. IDEs made lookup, refactoring, and syntax correction cheaper. These tools changed what people practiced, and some skills weakened, but the feedback loop remained legible. If the spreadsheet formula was wrong, totals failed. If the compiler emitted an error, the programmer had a surface to inspect. If an abstraction leaked, the maintainer eventually had to debug through it.</p>
+<p>LLMs are different because they can automate across the metacognitive boundary. They do not merely skip a step inside the work. They also generate the surrounding signs that the work is understood: explanation, confidence, tests, comments, commit messages, design alternatives, and review responses. The novice does not just lose practice producing the answer. They lose exposure to the failed attempts that would have taught them what an answer should smell like.</p>
+<p>Apprenticeship worked partly because experts leaked process.</p>
+<p>A novice sitting near a senior engineer did not only see finished code. They saw false starts, local confusion, abandoned hypotheses, searches through issue trackers, irritated pauses over ambiguous logs, and the humiliating moment where the elegant theory met production. That residue was not decorative. It taught which errors are normal, which are suspicious, which questions narrow the space, which shortcuts are safe, and which confident explanations are usually rationalizations.</p>
+<p>AI assistance cleans the residue away.</p>
+<p>The model returns a polished candidate. If asked, it returns a polished rationale. If challenged, it often returns a revised polished rationale. The surface is pedagogically hostile because it hides the distribution of failure. The learner sees answer-shaped objects instead of the search process that makes answer quality evaluable.</p>
+<p>The best counterargument is that AI can be a tutor. It can explain unfamiliar code, translate jargon, generate exercises, and reduce the intimidation cost of starting. This is not hypothetical. A controlled experiment on GitHub Copilot found that developers completed a JavaScript HTTP server task <a href="https://www.microsoft.com/en-us/research/publication/the-impact-of-ai-on-developer-productivity-evidence-from-github-copilot/">55.8 percent faster</a> with access to the tool. A CHI 2023 study on novice programmers using AI code generators found that access <a href="https://arxiv.org/abs/2302.07427">did not impede learning gains</a> in that setting. A recent programming-education study frames AI as a tool that can become either scaffold or crutch, depending on how students use it and how much metacognitive control they retain.<sup><a href="#fn-1" id="fnref-1">[1]</a></sup></p>
+<p>Those results complicate the lazy version of the deskilling thesis. They do not remove the structural one.</p>
+<p>The question is not whether AI can help a beginner complete a bounded exercise. It can. The question is whether repeated AI-mediated completion builds the threshold skill needed to evaluate AI-mediated completion later. That threshold is not the same as task success. It is the accumulated sense of failure modes: which generated SQL is subtly wrong under concurrency, which explanation confuses cause and correlation, which API use is technically valid but operationally doomed, which test asserts the implementation rather than the invariant, which refactor preserves behavior only because the example path is too friendly.</p>
+<p>Below the threshold, the user cannot update properly. A model gives ten answers. Seven are useful, two are harmlessly wrong, one is dangerously wrong. The expert notices the distribution and adjusts trust by domain, task shape, and verification surface. The novice notices that the work mostly moved forward. Their posterior becomes "this is reliable" because the failures that should have corrected it were invisible.</p>
+<p>This is calibration failure, not merely ignorance.</p>
+<p>Ignorance can be repaired by exposure. Calibration requires labeled exposure. The learner needs contact with attempts whose outcomes become known. They need to believe something, act on it, see it fail, and connect the failure to the earlier belief. LLM assistance can remove exactly that sequence. It supplies a candidate before the learner has generated a hypothesis. It supplies a rationale before the learner has struggled to explain. It supplies tests before the learner has decided what must be true. The novice receives labels only for the easiest outcomes: the compiler accepted it, the local test passed, the reviewer did not complain, the feature shipped.</p>
+<p>The harder labels arrive late, if they arrive at all.</p>
+<p>An outage three months later does not necessarily teach the original junior engineer why the AI's solution was wrong. The code may be owned by another team. The postmortem may name the immediate bug rather than the learning loop. The incident may be absorbed by seniors who quietly patch around it. The organization gets repair. The novice does not get calibration.</p>
+<p>This is why the "intermediate impossible" feels worse than ordinary junior weakness. A junior without AI is visibly slow. A junior with AI can be locally fast while accumulating hidden miscalibration. They can pass through the period where slowness would have forced instruction, because the artifact stream no longer advertises the missing judgment.</p>
+<p>The same pattern appears at the expert end, but with a different sign. METR's 2025 randomized trial of experienced open-source developers found that allowing AI tools made participants take <a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/">19 percent longer</a> on tasks in repositories they knew well. The interesting part is not simply the slowdown. It is the perception gap: developers expected speedups, and after the study still believed AI had helped them, while measured completion time went the other way.</p>
+<p>For experts, that gap can be corrected because they have independent judgment. They can notice that review overhead dominates, that model suggestions miss repository context, or that a particular task shape is bad for assistance. They can downgrade the tool.</p>
+<p>For novices, the same perception gap is more dangerous because the independent measuring instrument is under construction. They are using the tool to build the skill needed to evaluate the tool. That circularity is the structural problem.</p>
+<p>There is an economic layer that makes the individual advice almost useless.</p>
+<p>"Do not use AI until you have fundamentals" may be good pedagogy, but it is bad labor-market advice when peers, managers, and hiring screens expect AI-accelerated output. The individual novice does not choose the learning environment from behind a veil. They choose inside a market where refusing the tool can look like slower delivery, lower initiative, or cultural lag. Even if they understand the deskilling risk, opting out is individually expensive.</p>
+<p>So the empirical question and the normative question separate.</p>
+<p>It may be true that heavy LLM use before calibration causes deskilling. It does not follow that an individual should heroically refuse LLMs. Competitive pressure can make the harmful behavior rational. The market rewards visible throughput now and discounts invisible judgment later, especially when later failure can be distributed across teams, customers, maintainers, and incident budgets.</p>
+<p>This is where the comparison to older tools breaks.</p>
+<p>If calculators weakened mental arithmetic, schools could still require hand calculation during training. If compilers hid machine details, systems courses could still force assembly, memory models, and debuggers back into view. The hidden layer was bounded. The institution could reintroduce it as curriculum.</p>
+<p>LLM assistance is harder to bracket because it is useful at every layer of the training task. It can solve the exercise, explain the exercise, generate the study plan, answer the debugging question, critique the essay, write the flashcards, and simulate the mentor. To preserve apprenticeship, the institution has to decide not merely which tasks are off limits, but which parts of the learning feedback loop must remain humanly visible.</p>
+<p>That is not a ban problem. It is a structure problem.</p>
+<p>The inverse example is already visible in agent tooling. After a period of treating prompts as if sufficiently careful behavior descriptions could control agents, production systems keep moving back toward explicit workflow structure: states, typed outputs, guardrails, handoffs, durable execution, human checkpoints, and constrained tool calls. LangGraph describes itself around <a href="https://docs.langchain.com/langgraph">durable execution, human-in-the-loop behavior, and state transitions</a>. OpenAI's agent-building guide talks about <a href="https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/">guardrails, structured outputs, tools, and exit conditions</a> as ordinary engineering pieces rather than optional politeness.</p>
+<p>The industry is rediscovering that behavioral prompting has no enforcement ceiling. If an agent must not send the refund before checking eligibility, the robust solution is not a sterner paragraph in the prompt. It is a workflow that makes the refund transition unavailable until eligibility has been represented in state.</p>
+<p>That same lesson applies to apprenticeship. Telling novices to "use AI responsibly" is a behavioral commitment. It asks the least calibrated actor in the system to enforce the boundary most dependent on calibration. The structural version would preserve failure visibility by design.</p>
+<p>For software teams, that might mean AI-permitted and AI-restricted phases inside onboarding. It might mean reviews that ask the author to explain rejected alternatives without consulting the chat. It might mean incident follow-ups that trace not only the bad code but the verification process that allowed it through. It might mean generated tests are inadmissible until the human states the invariant first. It might mean pairing sessions where the novice watches the senior be confused, not just the senior's agent produce a patch.</p>
+<p>These are not purity rituals. They are attempts to keep the label attached to the example.</p>
+<p>The apprenticeship asset is not suffering. It is calibrated contact with reality. If AI removes drudgery while preserving that contact, it can accelerate learning. If it removes the contact and leaves only answer-shaped residue, it converts early career work into throughput theater.</p>
+<p>The structural danger is self-reinforcing. The less calibrated the novice is, the more attractive the model becomes. The more they use the model to bypass failure, the less calibration they acquire. The less calibration they acquire, the less able they are to notice when the model is wrong. At the same time, economic pressure punishes unilateral abstinence, and artifact-based management rewards the visible stream of completed work.</p>
+<p>This produces a deskilling pattern that is not simply "people forget how to code." That is too narrow. The deeper loss is the ability to know when code, prose, analysis, or design has crossed from plausible to correct enough. Once that evaluative layer weakens, later upskilling becomes harder because the mechanism of recovery depends on the very faculty being eroded.</p>
+<p>The old bargain of automation was that humans could give up some operations while retaining judgment over the result. LLMs put that bargain under stress because they can imitate the signs of judgment too.</p>
+<p>The practical boundary is therefore not between AI use and non-use. That boundary will not hold under market pressure. The real boundary is between systems that preserve visible failure for learners and systems that let plausible output stand in for learned judgment.</p>
+<p>A profession can survive losing some manual operations. It cannot outsource calibration during the period when calibration is supposed to form, then expect expertise to appear later as a managerial preference.</p>
+
+<section class="footnotes">
+<ol>
+<li id="fn-1">The scaffold/crutch distinction matters because it prevents the argument from collapsing into tool nostalgia. See "Tool, tutor, or crutch?" in the <a href="https://link.springer.com/article/10.1186/s40594-025-00592-w">International Journal of STEM Education</a>, which reports both support effects and risks around attenuated calibration and tool-linked self-efficacy. <a href="#fnref-1" class="footnote-backref">↩</a></li>
+</ol>
+</section>
+<section>
+<h2>Tags</h2>
+<ul>
+<li><a href="/tags/ai/">ai</a></li>
+<li><a href="/tags/systems/">systems</a></li>
+<li><a href="/tags/open-source/">open-source</a></li>
+</ul>
+</section>
+
+  </div>
+
+  
+
+  <nav class="post-nav" aria-label="Post navigation">
+    
+    
+    <a href="/posts/commercial-deployment-as-governance-bypass/" class="post-nav__link post-nav__link--next">
+      <span class="post-nav__label">Next</span>
+      <span class="post-nav__title">commercial deployment as governance bypass</span>
+    </a>
+    
+  </nav>
+</article>
+
+
+  </main>
+  <footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__text">Built with <a href="https://github.com/brickfrog/lattice">Lattice</a> — where structural violations are type errors.</p>
+  </div>
+</footer>
+
+</body>
+</html>
