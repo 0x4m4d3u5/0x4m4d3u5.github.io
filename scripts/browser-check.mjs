@@ -2,6 +2,17 @@ import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 const origin = process.env.DEMO_URL ?? 'http://127.0.0.1:8765';
 const browser = await chromium.launch({ chromiumSandbox: true, ...(process.env.LATTICE_BROWSER_CHANNEL ? { channel: process.env.LATTICE_BROWSER_CHANNEL } : {}) });
+async function checkDiagram(page) {
+  const blocks = page.locator('#records-diagram li');
+  assert.deepEqual(await blocks.allTextContents(), ['Data address', 'Investigation procedure', 'Action revision']);
+  assert.ok((await page.locator('#records-diagram figcaption').textContent()).includes('not an integration between the three products'));
+  assert.equal(await blocks.evaluateAll(elements => elements.every(element => {
+    const box = element.getBoundingClientRect();
+    const range = document.createRange(); range.selectNodeContents(element);
+    return parseFloat(getComputedStyle(element).fontSize) >= 16 && [...range.getClientRects()].every(rect => rect.left >= box.left && rect.right <= box.right && rect.top >= box.top && rect.bottom <= box.bottom);
+  })), true, 'diagram labels remain readable inside their blocks');
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+}
 try {
   for (const width of [1440, 390]) {
     const context = await browser.newContext({ viewport: { width, height: 900 } });
@@ -62,8 +73,10 @@ try {
     assert.equal(new URL(page.url()).hash, '#repeat-the-question-not-the-snapshot');
 
     await page.goto(origin + '/Notes/actions-lockfiles/');
-    const img = page.locator('article img'); await img.evaluate(el => el.decode());
-    assert.equal(await img.evaluate(el => el.naturalWidth), 600);
+    await checkDiagram(page);
+    const rows = await page.locator('#records-diagram li').evaluateAll(elements => elements.map(element => Math.round(element.getBoundingClientRect().top)));
+    assert.equal(new Set(rows).size, width === 1440 ? 1 : 3);
+    if (process.env.DEMO_SCREENSHOTS) await page.locator('#records-diagram').screenshot({ path: `${process.env.DEMO_SCREENSHOTS}-diagram-${width}.png` });
     await page.getByRole('link', { name: 'notebooks preserve a procedure', exact: true }).click();
     await page.waitForURL('**/Notes/supabase-notebooks/#keep-the-procedure');
     assert.equal(new URL(page.url()).hash, '#keep-the-procedure');
@@ -118,6 +131,16 @@ try {
     const section = page.locator('#repeat-the-question-not-the-snapshot');
     await section.locator('.section-permalink').click();
     assert.ok((await section.boundingBox()).y >= (await page.locator('.masthead').boundingBox()).height, 'fragment clears enlarged masthead');
+    await page.goto(origin + '/Notes/actions-lockfiles/');
+    await page.evaluate(() => document.documentElement.style.fontSize = '32px');
+    await checkDiagram(page);
+    if (process.env.DEMO_SCREENSHOTS) {
+      await page.evaluate(() => scrollTo(0, 0));
+      await page.screenshot({ path: `${process.env.DEMO_SCREENSHOTS}-diagram-${width}-double.png`, fullPage: true });
+    }
+    await page.emulateMedia({ forcedColors: 'active' });
+    await checkDiagram(page);
+    assert.equal(await page.locator('#records-diagram li').first().evaluate(element => getComputedStyle(element).borderStyle), 'solid');
     await context.close();
   }
   const plain = await browser.newContext({ javaScriptEnabled: false });
@@ -125,7 +148,7 @@ try {
   const details = page.locator('article details.callout-question'); await details.locator('summary').click();
   assert.notEqual(await details.getAttribute('open'), null);
   await page.getByRole('link', { name: 'Actions lockfile', exact: true }).click();
-  await page.locator('article img').evaluate(el => el.decode());
+  await checkDiagram(page);
   await plain.close();
-  console.log(`Verified deployed reader, real WASM alias search, canonical citations, image, mobile reflow and no-JS callouts: ${origin}`);
+  console.log(`Verified deployed reader, real WASM alias search, canonical citations, labeled diagram, mobile reflow and no-JS callouts: ${origin}`);
 } finally { await browser.close(); }

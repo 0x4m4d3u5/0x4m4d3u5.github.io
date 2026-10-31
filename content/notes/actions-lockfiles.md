@@ -17,9 +17,14 @@ Calls to reusable workflows are not pinned by this mechanism. Those calls still 
 
 ## Three different records
 
-![[records.png]]
-
-The diagram is an original schematic: data address → investigation procedure → action revision. These are different records, not an integration between the three products.
+<figure id="records-diagram" style="margin: 1.5rem 0">
+<ul role="list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: 1rem; list-style: none; padding: 0; font-family: var(--font-interface)">
+<li style="margin: 0; padding: min(1rem, 4vw); border: 1px solid currentColor; border-radius: .35rem; background: var(--surface-subtle)"><strong>Data address</strong></li>
+<li style="margin: 0; padding: min(1rem, 4vw); border: 1px solid currentColor; border-radius: .35rem; background: var(--surface-subtle)"><strong>Investigation procedure</strong></li>
+<li style="margin: 0; padding: min(1rem, 4vw); border: 1px solid currentColor; border-radius: .35rem; background: var(--surface-subtle)"><strong>Action revision</strong></li>
+</ul>
+<figcaption>The diagram is an original schematic: data address → investigation procedure → action revision. These are different records, not an integration between the three products.</figcaption>
+</figure>
 
 Primary source: [GitHub workflow dependency lockfiles](https://docs.github.com/en/actions/concepts/security/workflow-dependency-lockfiles), checked October 31, 2026.
 

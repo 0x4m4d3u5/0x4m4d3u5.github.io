@@ -2,7 +2,7 @@
 
 A small public linked-notes demo built with [Lattice](https://github.com/0x4m4d3u5/lattice), published at https://0x4m4d3u5.github.io.
 
-The notes are original summaries of primary sources, with explicit caveats and links. They demonstrate canonical aliases, callouts, a local raster schematic, published section citations and browser-side WASM search. They contain no private vault content.
+The notes are original summaries of primary sources, with explicit caveats and links. They demonstrate canonical aliases, callouts, a responsive labeled diagram, published section citations and browser-side WASM search. They contain no private vault content.
 
 ## Build and edit
 
