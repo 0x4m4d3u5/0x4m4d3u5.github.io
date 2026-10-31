@@ -59,6 +59,36 @@ try {
     assert.deepEqual(errors, []);
     await context.close();
   }
+  for (const width of [320, 390]) {
+    const context = await browser.newContext({ viewport: { width, height: 900 } });
+    const page = await context.newPage(); await page.goto(origin);
+    await page.waitForFunction(() => !document.querySelector('#lattice-controls').disabled);
+    await page.evaluate(() => document.documentElement.style.fontSize = '32px');
+    const fits = await page.locator('.masthead').evaluate(header => {
+      const bounds = header.getBoundingClientRect();
+      const brand = header.querySelector('.brand');
+      const toggle = header.querySelector('button').getBoundingClientRect();
+      const range = document.createRange(); range.selectNodeContents(brand.lastElementChild);
+      return [...range.getClientRects(), toggle].every(rect => rect.left >= bounds.left && rect.right <= bounds.right && rect.top >= bounds.top && rect.bottom <= bounds.bottom)
+        && brand.getBoundingClientRect().bottom <= toggle.top
+        && document.documentElement.scrollWidth <= innerWidth;
+    });
+    assert.equal(fits, true, 'enlarged mobile masthead keeps full labels in separate rows');
+    const toggle = page.getByRole('button', { name: 'Browse & search' });
+    await toggle.focus(); await toggle.press('Enter');
+    assert.equal(await toggle.getAttribute('aria-expanded'), 'true');
+    await page.keyboard.press('Escape');
+    assert.equal(await toggle.evaluate(element => element === document.activeElement), true);
+    assert.equal(await toggle.getAttribute('aria-expanded'), 'false');
+    if (process.env.DEMO_SCREENSHOTS) await page.screenshot({ path: `${process.env.DEMO_SCREENSHOTS}-${width}-double-text.png` });
+    await page.goto(origin + '/Notes/supabase-notebooks/');
+    await page.waitForFunction(() => !document.querySelector('#lattice-controls').disabled);
+    await page.evaluate(() => document.documentElement.style.fontSize = '32px');
+    const section = page.locator('#repeat-the-question-not-the-snapshot');
+    await section.locator('.section-permalink').click();
+    assert.ok((await section.boundingBox()).y >= (await page.locator('.masthead').boundingBox()).height, 'fragment clears enlarged masthead');
+    await context.close();
+  }
   const plain = await browser.newContext({ javaScriptEnabled: false });
   const page = await plain.newPage(); await page.goto(origin + '/Notes/supabase-notebooks/');
   const details = page.locator('article details.callout-question'); await details.locator('summary').click();
