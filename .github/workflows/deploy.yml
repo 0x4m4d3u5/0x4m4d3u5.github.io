@@ -3,6 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -11,7 +12,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: ${{ github.event_name == 'pull_request' && format('pages-pr-{0}', github.event.number) || 'pages' }}
   cancel-in-progress: true
 
 jobs:
@@ -20,23 +21,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install MoonBit
-        run: |
-          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
-          echo "$HOME/.moon/bin" >> $GITHUB_PATH
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '26.12.1'
+          package-manager-cache: false
 
-      - name: Build Lattice from source
+      - name: Build pinned Lattice and search runtime
+        env:
+          MOON_HOME: ${{ runner.temp }}/lattice-moon
         run: |
-          git clone --depth 1 https://github.com/0x4m4d3u5/lattice.git /tmp/lattice
+          git clone https://github.com/0x4m4d3u5/lattice.git /tmp/lattice
+          git -C /tmp/lattice checkout --detach "$(cat lattice-revision.txt)"
           cd /tmp/lattice
+          bash scripts/install-ci-toolchain.sh
+          export PATH="$MOON_HOME/bin:$PATH"
           moon update
-          moon build --target native --release
-          chmod +x _build/native/release/build/cmd/main/main.exe
+          moon build cmd/main --target js --deny-warn
+          moon -C "$MOON_HOME/lib/core" bundle --target wasm-gc --deny-warn
+          moon build examples/wasm_note --target wasm-gc --deny-warn
 
       - name: Build site
-        run: |
-          cd $GITHUB_WORKSPACE
-          /tmp/lattice/_build/native/release/build/cmd/main/main.exe build content -o dist
+        env:
+          LATTICE_SOURCE: /tmp/lattice
+        run: node scripts/build.mjs
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
@@ -44,6 +51,7 @@ jobs:
           path: dist
 
   deploy:
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment:
