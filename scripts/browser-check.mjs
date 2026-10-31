@@ -24,6 +24,20 @@ try {
     await page.waitForURL('**/Notes/supabase-notebooks/**');
     await page.waitForFunction(() => !document.querySelector('#lattice-controls').disabled);
     assert.equal(await page.locator('article h1').textContent(), 'Supabase Explorer notebooks');
+    const heading = page.locator('#repeat-the-question-not-the-snapshot');
+    const permalink = heading.locator('.section-permalink');
+    await permalink.focus();
+    const aligned = await heading.evaluate(element => {
+      const range = document.createRange(); range.selectNodeContents(element.firstChild);
+      const text = [...range.getClientRects()];
+      const link = element.querySelector('.section-permalink').getBoundingClientRect();
+      return link.top < text[0].bottom && link.bottom > text[0].top && text.every(rect => rect.right <= link.left);
+    });
+    assert.equal(aligned, true, 'section link stays beside the heading without overlap');
+    assert.equal(await permalink.getAttribute('href'), '#repeat-the-question-not-the-snapshot');
+    await permalink.press('Enter');
+    assert.equal(new URL(page.url()).hash, '#repeat-the-question-not-the-snapshot');
+
     await page.goto(origin + '/Notes/actions-lockfiles/');
     const img = page.locator('article img'); await img.evaluate(el => el.decode());
     assert.equal(await img.evaluate(el => el.naturalWidth), 600);
