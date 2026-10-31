@@ -64,6 +64,13 @@ try {
     const page = await context.newPage(); await page.goto(origin);
     await page.waitForFunction(() => !document.querySelector('#lattice-controls').disabled);
     await page.evaluate(() => document.documentElement.style.fontSize = '32px');
+    const title = await page.locator('article h1').evaluate(heading => {
+      const text = heading.firstChild; const start = text.textContent.indexOf('fieldnotes');
+      const range = document.createRange(); range.setStart(text, start); range.setEnd(text, start + 'fieldnotes'.length);
+      return { lines: new Set([...range.getClientRects()].map(rect => Math.round(rect.top))).size, size: parseFloat(getComputedStyle(heading).fontSize) };
+    });
+    assert.equal(title.lines, 1, 'ordinary title word fits at enlarged text size');
+    assert.ok(title.size >= 68, 'do not shrink enlarged title text');
     const fits = await page.locator('.masthead').evaluate(header => {
       const bounds = header.getBoundingClientRect();
       const brand = header.querySelector('.brand');
