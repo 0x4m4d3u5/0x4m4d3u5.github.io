@@ -11,7 +11,10 @@ try {
     assert.equal(response.status(), 200);
     await page.waitForFunction(() => !document.querySelector('#lattice-controls').disabled);
     assert.equal(await page.locator('article h1').textContent(), 'Code fieldnotes');
+    assert.equal(await page.locator('#lattice-current-collection').textContent(), 'Pages');
     if (width === 390) await page.getByRole('button', { name: /Browse.*search/i }).click();
+    assert.equal(await page.locator('#lattice-page-navigation summary').filter({ hasText: /^Pages/ }).count(), 1);
+    assert.equal(await page.locator('#lattice-page-navigation').getByText('_root', { exact: false }).count(), 0);
     await page.getByRole('searchbox').fill('Saved investigations');
     await page.getByRole('button', { name: 'Search', exact: true }).click();
     await page.locator('#lattice-results a').waitFor();
