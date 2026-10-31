@@ -17,10 +17,19 @@ try {
   for (const width of [1440, 390]) {
     const context = await browser.newContext({ viewport: { width, height: 900 } });
     const page = await context.newPage();
+    await page.addInitScript(() => {
+      window.searchStatuses = [];
+      new MutationObserver(() => {
+        const text = document.querySelector('#lattice-status')?.textContent;
+        if (text !== undefined && text !== window.searchStatuses.at(-1)) window.searchStatuses.push(text);
+      }).observe(document, { subtree: true, childList: true, characterData: true });
+    });
     const errors = []; page.on('pageerror', e => errors.push(e.message));
     const response = await page.goto(origin);
     assert.equal(response.status(), 200);
     await page.waitForFunction(() => !document.querySelector('#lattice-controls').disabled);
+    assert.equal(await page.evaluate(() => window.searchStatuses.includes('Loading wiki…')), false, 'initial HTML must not flash a loading placeholder');
+    const loadingCount = await page.evaluate(() => window.searchStatuses.filter(text => text === 'Loading search…').length);
     assert.equal(await page.locator('article h1').textContent(), 'Code fieldnotes');
     assert.equal(await page.locator('#lattice-current-collection').textContent(), 'Pages');
     if (width === 390) await page.getByRole('button', { name: /Browse.*search/i }).click();
@@ -58,6 +67,7 @@ try {
     await page.goBack(); await page.waitForURL(noteURL);
     await page.waitForFunction(() => document.querySelector('article h1')?.textContent === 'Supabase Explorer notebooks');
     assert.equal(await page.evaluate(() => window.readerContinuity), 'kept');
+    assert.equal(await page.evaluate(() => window.searchStatuses.filter(text => text === 'Loading search…').length), loadingCount, 'note navigation must not restart loading feedback');
     const heading = page.locator('#repeat-the-question-not-the-snapshot');
     const permalink = heading.locator('.section-permalink');
     await permalink.focus();
