@@ -1,0 +1,1 @@
+{"name":"code-fieldnotes","private":true,"type":"module","scripts":{"test":"node scripts/browser-check.mjs"},"devDependencies":{"playwright":"1.63.0"}}
