@@ -14,6 +14,28 @@ async function checkDiagram(page) {
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
 }
 try {
+  const coldContext = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  const cold = await coldContext.newPage();
+  let release;
+  const gate = new Promise(resolve => release = resolve);
+  await cold.route('**/app.js', async route => { await gate; await route.continue(); });
+  await cold.goto(origin + '/Notes/supabase-notebooks/', { waitUntil: 'commit' });
+  await cold.locator('article h1').waitFor();
+  assert.equal(await cold.locator('article h1').textContent(), 'Supabase Explorer notebooks');
+  assert.equal(await cold.title(), 'Supabase Explorer notebooks | Code fieldnotes');
+  release();
+  await cold.waitForFunction(() => !document.querySelector('#lattice-controls').disabled);
+  assert.equal(await cold.locator('article h1').textContent(), 'Supabase Explorer notebooks');
+  await coldContext.close();
+  const staticContext = await browser.newContext({ javaScriptEnabled: false });
+  const staticPage = await staticContext.newPage();
+  for (const [path, title] of [['/', 'Code fieldnotes'], ['/Notes/supabase-notebooks/', 'Supabase Explorer notebooks']]) {
+    await staticPage.goto(origin + path);
+    assert.equal(await staticPage.locator('article h1').textContent(), title);
+    await staticPage.reload();
+    assert.equal(await staticPage.locator('article h1').textContent(), title);
+  }
+  await staticContext.close();
   for (const width of [1440, 390]) {
     const context = await browser.newContext({ viewport: { width, height: 900 } });
     const page = await context.newPage();
