@@ -19,7 +19,8 @@ try {
     assert.ok((await page.locator('#lattice-results a').getAttribute('href')).startsWith('/Notes/supabase-notebooks/'));
     await page.locator('#lattice-results a').click();
     await page.waitForURL('**/Notes/supabase-notebooks/**');
-    assert.equal(await page.locator('article h1').textContent(), 'Supabase Explorer notebooks | Code fieldnotes');
+    await page.waitForFunction(() => !document.querySelector('#lattice-controls').disabled);
+    assert.equal(await page.locator('article h1').textContent(), 'Supabase Explorer notebooks');
     await page.goto(origin + '/Notes/actions-lockfiles/');
     const img = page.locator('article img'); await img.evaluate(el => el.decode());
     assert.equal(await img.evaluate(el => el.naturalWidth), 600);

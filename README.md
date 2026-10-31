@@ -10,6 +10,7 @@ The notes are original summaries of primary sources, with explicit caveats and l
 
 ```sh
 moon build cmd/main --target js --deny-warn
+moon -C "$MOON_HOME/lib/core" bundle --target wasm-gc --deny-warn
 moon build examples/wasm_note --target wasm-gc --deny-warn
 ```
 
