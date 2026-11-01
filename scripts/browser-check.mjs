@@ -23,15 +23,24 @@ try {
   await cold.locator('article h1').waitFor();
   assert.equal(await cold.locator('article h1').textContent(), 'Supabase Explorer notebooks');
   assert.equal(await cold.title(), 'Supabase Explorer notebooks | Code fieldnotes');
+  const coldMetadata = (await cold.locator('.reader-metadata').innerText()).replace(/\s+/g, ' ');
+  assert.match(coldMetadata, /Published 2026-10-31/);
+  assert.match(coldMetadata, /Tags:/);
+  assert.match(coldMetadata, /Backlinks \(\d+\)/);
+  assert.equal(coldMetadata.includes('Updated'), false);
   release();
   await cold.waitForFunction(() => !document.querySelector('#lattice-controls').disabled);
   assert.equal(await cold.locator('article h1').textContent(), 'Supabase Explorer notebooks');
+  assert.equal((await cold.locator('.reader-metadata').innerText()).replace(/\s+/g, ' '), coldMetadata);
   await coldContext.close();
   const staticContext = await browser.newContext({ javaScriptEnabled: false });
   const staticPage = await staticContext.newPage();
   for (const [path, title] of [['/', 'Code fieldnotes'], ['/Notes/supabase-notebooks/', 'Supabase Explorer notebooks']]) {
     await staticPage.goto(origin + path);
     assert.equal(await staticPage.locator('article h1').textContent(), title);
+    const metadata = await staticPage.locator('.reader-metadata').innerText();
+    assert.match(metadata, /Published 2026-10-31/);
+    if (path === '/') assert.match(metadata, /Updated 2026-11-01/);
     await staticPage.reload();
     assert.equal(await staticPage.locator('article h1').textContent(), title);
   }
@@ -53,6 +62,7 @@ try {
     assert.equal(await page.evaluate(() => window.searchStatuses.includes('Loading wiki…')), false, 'initial HTML must not flash a loading placeholder');
     const loadingCount = await page.evaluate(() => window.searchStatuses.filter(text => text === 'Loading search…').length);
     assert.equal(await page.locator('article h1').textContent(), 'Code fieldnotes');
+    assert.match(await page.locator('.reader-metadata').innerText(), /Updated 2026-11-01/);
     assert.equal(await page.locator('#lattice-current-collection').textContent(), 'Pages');
     if (width === 390) await page.getByRole('button', { name: /Browse.*search/i }).click();
     assert.equal(await page.locator('#lattice-page-navigation summary').filter({ hasText: /^Pages/ }).count(), 1);

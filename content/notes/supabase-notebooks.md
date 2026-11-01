@@ -3,6 +3,7 @@ title: Supabase Explorer notebooks
 description: Keeping query steps and reasoning in a versioned investigation.
 aliases: ["Saved investigations"]
 tags: [data, reproducibility]
+date: 2026-10-31
 ---
 ## Keep the procedure
 

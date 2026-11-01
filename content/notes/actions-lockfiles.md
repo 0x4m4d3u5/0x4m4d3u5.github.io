@@ -3,6 +3,7 @@ title: GitHub Actions dependency lockfiles
 description: Recorded action revisions, with a clear boundary around what is pinned.
 aliases: ["Actions lockfile"]
 tags: [builds, reproducibility]
+date: 2026-10-31
 ---
 ## What gets recorded
 
