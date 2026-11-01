@@ -6,10 +6,11 @@ The notes are original summaries of primary sources, with explicit caveats and l
 
 ## Build and edit
 
-`lattice-revision.txt` pins the merged source revision. Follow that checkout's pinned toolchain setup, then build its JS CLI and WASM-GC note runtime:
+`lattice-revision.txt` pins the merged source revision. Follow that checkout's pinned toolchain setup, then build its JS CLI, independent JS graph runtime and WASM-GC note runtime:
 
 ```sh
 moon build cmd/main --target js --deny-warn
+moon build examples/local_graph --target js --deny-warn
 moon -C "$MOON_HOME/lib/core" bundle --target wasm-gc --deny-warn
 moon build examples/wasm_note --target wasm-gc --deny-warn
 ```
@@ -22,6 +23,12 @@ python3 -m http.server 8000 --directory /tmp/fieldnotes-preview
 ```
 
 Edit Markdown under `content/notes`, rebuild into another new directory and inspect the changed page and search passage. The script stages a copy, packages the matching search runtime, runs `check` and a strict build, and refuses an existing output directory. It never rewrites sources or deletes previous output. Lattice's publication writes themselves are not atomic.
+
+## Author-selected reading paths
+
+The Sail note demonstrates an ordered **Related notes** section, labeled “Selected by the author.” Set `related: [supabase-notebooks, actions-lockfiles]` using canonical note slugs; the collection validates these as typed references. Omit the field when no editorial recommendation is useful. The custom page template renders `{{related_notes}}` without JavaScript.
+
+These recommendations are distinct from contextual body wikilinks: they do not add graph edges or backlinks. The existing explanatory body links remain intact. The Sail note’s explicit update date records this editorial addition, not a fresh verification of its external sources.
 
 ## Publishing
 

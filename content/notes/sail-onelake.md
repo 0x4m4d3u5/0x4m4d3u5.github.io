@@ -4,6 +4,8 @@ description: A catalog connection between an execution engine and an existing da
 aliases: ["Sail catalog"]
 tags: [data, interfaces]
 date: 2026-10-31
+updated: 2026-11-01
+related: [supabase-notebooks, actions-lockfiles]
 ---
 ## The useful part
 
