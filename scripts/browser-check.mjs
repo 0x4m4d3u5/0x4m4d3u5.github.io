@@ -28,6 +28,9 @@ try {
   assert.match(coldMetadata, /Tags:/);
   assert.match(coldMetadata, /Backlinks \(\d+\)/);
   assert.equal(coldMetadata.includes('Updated'), false);
+  const sourceBacklink = cold.locator('.backlinks li').filter({ has: cold.getByRole('link', { name: 'Sail and OneLake', exact: true }) });
+  assert.match(await sourceBacklink.locator('.backlink-context').innerText(), /save the investigation that uses the connection/);
+  assert.equal(await sourceBacklink.locator('a').getAttribute('href'), '/Notes/sail-onelake/#what-to-verify');
   release();
   await cold.waitForFunction(() => !document.querySelector('#lattice-controls').disabled);
   assert.equal(await cold.locator('article h1').textContent(), 'Supabase Explorer notebooks');
@@ -44,6 +47,10 @@ try {
     await staticPage.reload();
     assert.equal(await staticPage.locator('article h1').textContent(), title);
   }
+  const sourceLink = staticPage.locator('.backlinks').getByRole('link', { name: 'Sail and OneLake', exact: true });
+  await sourceLink.focus(); await sourceLink.press('Enter');
+  await staticPage.waitForURL('**/Notes/sail-onelake/#what-to-verify');
+  assert.equal(await staticPage.locator('#what-to-verify').count(), 1);
   await staticContext.close();
   for (const width of [1440, 390]) {
     const context = await browser.newContext({ viewport: { width, height: 900 } });
@@ -81,6 +88,17 @@ try {
     assert.equal(await page.evaluate(() => window.readerContinuity), 'kept', 'sidebar navigation must preserve the reader shell');
     assert.equal(await page.locator('#lattice-filters').getAttribute('open'), '', 'tag disclosure stays open');
     assert.equal(await page.locator('#lattice-query').inputValue(), 'Saved investigations');
+    const contextual = page.locator('.backlinks li').filter({ has: page.getByRole('link', { name: 'Sail and OneLake', exact: true }) });
+    assert.match(await contextual.innerText(), /save the investigation that uses the connection/);
+    assert.equal(await contextual.evaluate(element => element.scrollWidth <= element.clientWidth), true);
+    await contextual.scrollIntoViewIfNeeded();
+    if (process.env.DEMO_SCREENSHOTS) await page.screenshot({ path: `${process.env.DEMO_SCREENSHOTS}-backlinks-${width}.png` });
+    const contextualURL = page.url();
+    await contextual.locator('a').focus(); await contextual.locator('a').press('Enter');
+    await page.waitForURL('**/Notes/sail-onelake/#what-to-verify');
+    assert.equal(await page.evaluate(() => window.readerContinuity), 'kept');
+    await page.goBack(); await page.waitForURL(contextualURL);
+    await page.waitForFunction(() => document.querySelector('article h1')?.textContent === 'Supabase Explorer notebooks');
     const noteURL = page.url();
     if (width === 390) await page.getByRole('button', { name: /Browse.*search/i }).click();
     let releaseVisit, sawVisit;
