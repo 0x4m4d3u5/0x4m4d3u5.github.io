@@ -86,6 +86,14 @@ try {
     await page.locator('#lattice-results a').waitFor();
     assert.equal(await page.locator('#lattice-results a').count(), 1);
     assert.ok((await page.locator('#lattice-results a').getAttribute('href')).startsWith('/Notes/supabase-notebooks/'));
+    // Reuse the loaded worker rather than reinitializing it for every query.
+    for (const term of ['no-such-fieldnotes-result', 'Saved investigations', 'Saved investigations']) {
+      await page.getByRole('searchbox').fill(term);
+      await page.getByRole('button', { name: 'Search', exact: true }).click();
+      await page.waitForFunction(() => document.querySelector('#lattice-results').getAttribute('aria-busy') !== 'true');
+      assert.equal(await page.locator('#lattice-results a').count(), term === 'no-such-fieldnotes-result' ? 0 : 1);
+      if (term === 'Saved investigations') assert.ok((await page.locator('#lattice-results a').getAttribute('href')).startsWith('/Notes/supabase-notebooks/'));
+    }
     await page.locator('#lattice-filters').evaluate(element => element.open = true);
     await page.evaluate(() => window.readerContinuity = 'kept');
     await page.locator('#lattice-results a').click();
@@ -236,6 +244,15 @@ try {
     await graphPage.locator('.graph-canvas a[aria-current="page"]').waitFor();
     assert.equal(new URL(await graphPage.locator('.graph-canvas a[aria-current="page"]').getAttribute('href')).pathname, new URL(destination).pathname);
     await graphPage.goBack(); await graphPage.waitForURL(origin + '/Notes/sail-onelake/');
+    await checkRelated(graphPage);
+    await graphPage.goForward(); await graphPage.waitForURL(destination);
+    await graphPage.waitForFunction(() => !document.querySelector('#lattice-controls').disabled);
+    const graphDetails = graphPage.locator('.local-graph');
+    if (await graphDetails.getAttribute('open') === null) await graphDetails.locator('summary').click();
+    await graphPage.locator('.graph-canvas a[aria-current="page"]').waitFor();
+    assert.equal(new URL(await graphPage.locator('.graph-canvas a[aria-current="page"]').getAttribute('href')).pathname, new URL(destination).pathname);
+    await graphPage.goBack(); await graphPage.waitForURL(origin + '/Notes/sail-onelake/');
+    await checkRelated(graphPage);
     await graphPage.close();
   }
   const graphPlain = await browser.newPage({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
