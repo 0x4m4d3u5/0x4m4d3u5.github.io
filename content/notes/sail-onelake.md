@@ -3,6 +3,7 @@ title: Sail and OneLake
 description: A catalog connection between an execution engine and an existing data lake.
 aliases: ["Sail catalog"]
 tags: [data, interfaces]
+date: 2026-10-31
 ---
 ## The useful part
 
