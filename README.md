@@ -6,13 +6,13 @@ The notes are original summaries of primary sources, with explicit caveats and l
 
 ## Build and edit
 
-`lattice-revision.txt` pins the merged source revision. Follow that checkout's pinned toolchain setup, then build its JS CLI, independent JS graph runtime and WASM-GC note runtime:
+`lattice-revision.txt` pins the merged source revision. Follow that checkout's pinned toolchain setup, then build its JS CLI, independent JS graph runtime and WASM-GC prepared-search runtime:
 
 ```sh
 moon build cmd/main --target js --deny-warn
 moon build examples/local_graph --target js --deny-warn
 moon -C "$MOON_HOME/lib/core" bundle --target wasm-gc --deny-warn
-moon build examples/wasm_note --target wasm-gc --deny-warn
+moon build examples/prepared_search --target wasm-gc --deny-warn
 ```
 
 From this repository, point at that checkout and choose a new output directory:
