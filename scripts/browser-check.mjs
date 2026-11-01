@@ -211,4 +211,29 @@ try {
   await checkDiagram(page);
   await plain.close();
   console.log(`Verified deployed reader, real WASM alias search, canonical citations, labeled diagram, mobile reflow and no-JS callouts: ${origin}`);
+  for (const width of [1280, 390]) {
+    const graphPage = await browser.newPage({ viewport: { width, height: 900 }, reducedMotion: 'reduce' });
+    await graphPage.goto(origin + '/Notes/sail-onelake/');
+    await graphPage.locator('.local-graph summary').click();
+    await graphPage.locator('.graph-canvas a').first().waitFor();
+    assert.ok(await graphPage.locator('.graph-canvas a').count() > 1);
+    assert.ok(await graphPage.locator('.graph-links a').count() > 0);
+    assert.equal(await graphPage.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    if (process.env.DEMO_SCREENSHOTS) await graphPage.locator('.local-graph').screenshot({ path: `${process.env.DEMO_SCREENSHOTS}-graph-${width}.png` });
+    const link = graphPage.locator('.graph-canvas a').nth(1);
+    const destination = await link.getAttribute('href');
+    await link.focus(); await link.press('Enter'); await graphPage.waitForURL(destination);
+    await graphPage.locator('.local-graph summary').click();
+    await graphPage.locator('.graph-canvas a[aria-current="page"]').waitFor();
+    assert.equal(new URL(await graphPage.locator('.graph-canvas a[aria-current="page"]').getAttribute('href')).pathname, new URL(destination).pathname);
+    await graphPage.goBack(); await graphPage.waitForURL(origin + '/Notes/sail-onelake/');
+    await graphPage.close();
+  }
+  const graphPlain = await browser.newPage({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+  await graphPlain.goto(origin + '/Notes/sail-onelake/');
+  await graphPlain.locator('.local-graph summary').click();
+  assert.ok(await graphPlain.locator('.graph-links a').count() > 0);
+  assert.equal(await graphPlain.locator('.graph-canvas').count(), 0);
+  await graphPlain.close();
+  console.log('Local graph: desktop/mobile, canonical keyboard navigation/history and no-JS links passed');
 } finally { await browser.close(); }
