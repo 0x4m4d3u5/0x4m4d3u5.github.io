@@ -2,6 +2,13 @@ import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 const origin = process.env.DEMO_URL ?? 'http://127.0.0.1:8765';
 const browser = await chromium.launch({ chromiumSandbox: true, ...(process.env.LATTICE_BROWSER_CHANNEL ? { channel: process.env.LATTICE_BROWSER_CHANNEL } : {}) });
+async function checkRelated(page) {
+  const related = page.getByRole('region', { name: 'Related notes', exact: true });
+  assert.equal(await related.locator('p').innerText(), 'Selected by the author.');
+  assert.deepEqual(await related.locator('a').allTextContents(), ['Supabase Explorer notebooks', 'GitHub Actions dependency lockfiles']);
+  assert.deepEqual(await related.locator('a').evaluateAll(links => links.map(a => a.getAttribute('href'))), ['/Notes/supabase-notebooks/', '/Notes/actions-lockfiles/']);
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+}
 async function checkDiagram(page) {
   const blocks = page.locator('#records-diagram li');
   assert.deepEqual(await blocks.allTextContents(), ['Data address', 'Investigation procedure', 'Action revision']);
@@ -214,6 +221,8 @@ try {
   for (const width of [1280, 390]) {
     const graphPage = await browser.newPage({ viewport: { width, height: 900 }, reducedMotion: 'reduce' });
     await graphPage.goto(origin + '/Notes/sail-onelake/');
+    await checkRelated(graphPage);
+    if (process.env.DEMO_SCREENSHOTS) await graphPage.locator('.related-notes').screenshot({ path: `${process.env.DEMO_SCREENSHOTS}-related-${width}.png` });
     await graphPage.locator('.local-graph summary').click();
     await graphPage.locator('.graph-canvas a').first().waitFor();
     assert.ok(await graphPage.locator('.graph-canvas a').count() > 1);
@@ -231,6 +240,12 @@ try {
   }
   const graphPlain = await browser.newPage({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
   await graphPlain.goto(origin + '/Notes/sail-onelake/');
+  await checkRelated(graphPlain);
+  const recommendation = graphPlain.locator('.related-notes a').first();
+  await recommendation.focus(); await recommendation.press('Enter');
+  await graphPlain.waitForURL(origin + '/Notes/supabase-notebooks/');
+  assert.equal(await graphPlain.locator('.related-notes').count(), 0);
+  await graphPlain.goBack(); await checkRelated(graphPlain);
   await graphPlain.locator('.local-graph summary').click();
   assert.ok(await graphPlain.locator('.graph-links a').count() > 0);
   assert.equal(await graphPlain.locator('.graph-canvas').count(), 0);
